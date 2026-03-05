@@ -81,6 +81,17 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/health', healthRoute);
 
+// API v1 Root Route
+app.get('/api/v1', (req, res) => {
+    res.status(200).json({
+        status: 'success',
+        message: 'MERCATOX API v1 - NexusAI Powered',
+        version: '1.0.0',
+        documentation: '/api/v1/docs', // Placeholder for docs
+        health: '/api/v1/health'
+    });
+});
+
 // Auth Routes
 app.use('/api/v1/auth', authRoutes);
 
