@@ -1,0 +1,45 @@
+# Admin Access and User Creation Guide
+
+To access the platform command center, you must satisfy two security requirements:
+1.  **User Role**: Your account must have the `admin` role in the database.
+2.  **Email Verification**: Your account's email must match the `SUPER_ADMIN_EMAIL` environment variable.
+
+---
+
+## Step 1: Set up Environment Variable
+
+Open your [.env](file:///d:/antigravity/.env) file (at the root of the project) and add or update the `SUPER_ADMIN_EMAIL` variable with the email address you intend to use for administrative access.
+
+```env
+SUPER_ADMIN_EMAIL=your-admin-email@example.com
+```
+
+---
+
+## Step 2: Create or Upgrade Admin User
+
+I've created a helper script at [createAdmin.js](file:///d:/antigravity/server/createAdmin.js) to simplify this process.
+
+Run the following command in your terminal from the project root:
+
+```powershell
+node server/createAdmin.js "Admin Name" "your-admin-email@example.com" "yourpassword"
+```
+
+> [!NOTE]
+> If the user already exists, it will be upgraded to the `admin` role. If not, a new user will be created with the specified password.
+
+---
+
+## Step 3: Access the Dashboard
+
+1.  Ensure your backend and frontend servers are running.
+2.  Open your browser and navigate to: `http://localhost:5173/admindashboard` (or your current frontend URL).
+3.  Log in with your admin credentials.
+
+---
+
+## Troubleshooting
+
+- **403 Forbidden**: Verify that both the `SUPER_ADMIN_EMAIL` in [.env](file:///d:/antigravity/.env) and the email in your database are **exactly** the same.
+- **ProtectedRoute Redirect**: Ensure you are logged in before accessing `/admindashboard`.

@@ -1,0 +1,29 @@
+# Fix Login and Signup Functionality Walkthrough
+
+I have completed the tasks to fix the login and signup flow across the backend and the frontend.
+
+## Changes Made
+- **Backend response formatting:** Updated [authController.js](file:///D:/antigravity/server/controllers/authController.js) to return a flat `{ success: true, token, user }` object.
+- **Frontend TS Types:** Updated the [AuthResponse](file:///D:/antigravity/client/src/types/index.ts#44-49) type in [types/index.ts](file:///D:/antigravity/client/src/types/index.ts) to expect the new flattened format.
+- **Frontend Context:** Refactored [AuthContext.tsx](file:///D:/antigravity/client/src/context/AuthContext.tsx) to handle the new [AuthResponse](file:///D:/antigravity/client/src/types/index.ts#44-49) type and extract the fields correctly.
+- **Frontend Auth Pages:** Rewrote the submit logic for both [LoginPage.tsx](file:///D:/antigravity/client/src/pages/auth/LoginPage.tsx) and [SignupPage.tsx](file:///D:/antigravity/client/src/pages/auth/SignupPage.tsx) using local state to capture values, utilize the central [fetchWithKind](file:///D:/antigravity/client/src/services/axiosWrapper.ts#26-58) Axios wrapper, set explicit global error messages upon failure, store the token/user upon success, and print explicit console logs as requested.
+
+## Automated Verification Done
+- Sent direct cURL requests to the API locally, verifying that both `/auth/login` and `/auth/signup` return the exact JSON structure we defined. 
+- Sent direct cURL requests with incorrect credentials to verify the error response format.
+
+## Manual Verification Required
+Because the automated browser test isn't fully set up with the local frontend application, please perform the following manual test:
+
+1. Open your browser and navigate to the frontend running at [http://localhost:5173/auth/signup](http://localhost:5173/auth/signup) or [http://localhost:5174/auth/signup](http://localhost:5174/auth/signup). (You may need to verify which port Vite spun up by checking the dev server terminal).
+2. Open your browser Developer Tools (F12) and go to the **Console** tab to observe the debug logs.
+3. Attempt to sign up with a test email and password.
+4. Verify the console prints out:
+   `[Auth] Signup Token received: true`
+   `[Auth] Token stored in localStorage: true`
+5. Verify you are automatically redirected to the home page or dashboard.
+6. Verify your name/avatar is displayed in the UI, indicating global state caught the user.
+7. Open the **Network** tab in dev tools. Make any API call (e.g. going to a protected page, fetching products). Look at the Request Headers and verify `Authorization: Bearer <your_token>` is present.
+8. Log out.
+9. Navigate to the login page. Attempt to login with an incorrect password and verify the red error banner appears.
+10. Attempt to login with the correct password and verify similar success states (console prints, redirection, network headers).
