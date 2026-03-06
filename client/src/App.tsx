@@ -10,6 +10,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import { HelmetProvider } from 'react-helmet-async';
+import { Toaster } from 'react-hot-toast';
 
 // Layouts
 import MainLayout from './layouts/MainLayout';
@@ -22,6 +24,7 @@ import Recommendations from './pages/Recommendations';
 import CategoriesPage from './pages/shop/CategoriesPage';
 import CategoryProductsPage from './pages/shop/CategoryProductsPage';
 import ProductDetailsPage from './pages/shop/ProductDetailsPage';
+import SearchPage from '../src/pages/shop/SearchPage';
 import LoginPage from './pages/auth/LoginPage';
 import SignupPage from './pages/auth/SignupPage';
 import DashboardHome from './pages/dashboard/DashboardHome';
@@ -56,69 +59,73 @@ function App() {
   }, []);
 
   return (
-    <AuthProvider>
-      <CartProvider>
-        <Router>
-          <NotificationBanner kind={errorKind} />
-          <Routes>
-            {/* Main Layout (Public) */}
-            <Route path="/" element={<MainLayout />}>
-              <Route index element={<HomePage />} />
-              <Route path="recommendations" element={<Recommendations />} />
-              <Route path="cart" element={<CartPage />} />
-              <Route path="wishlist" element={<WishlistPage />} />
+    <HelmetProvider>
+      <AuthProvider>
+        <CartProvider>
+          <Router>
+            <Toaster position="top-right" />
+            <NotificationBanner kind={errorKind} />
+            <Routes>
+              {/* Main Layout (Public) */}
+              <Route path="/" element={<MainLayout />}>
+                <Route index element={<HomePage />} />
+                <Route path="recommendations" element={<Recommendations />} />
+                <Route path="cart" element={<CartPage />} />
+                <Route path="wishlist" element={<WishlistPage />} />
 
-              {/* Shop Sub-routes */}
-              <Route path="shop">
-                <Route index element={<CategoriesPage />} />
-                <Route path="category/:categoryId" element={<CategoryProductsPage />} />
-                <Route path="product/:productId" element={<ProductDetailsPage />} />
+                {/* Shop Sub-routes */}
+                <Route path="shop">
+                  <Route index element={<CategoriesPage />} />
+                  <Route path="category/:categoryId" element={<CategoryProductsPage />} />
+                  <Route path="product/:productId" element={<ProductDetailsPage />} />
+                  <Route path="search" element={<SearchPage />} />
+                </Route>
               </Route>
-            </Route>
 
-            {/* Auth Layout */}
-            <Route path="/auth" element={<AuthLayout />}>
-              <Route index element={<Navigate to="/auth/login" replace />} />
-              <Route path="login" element={<LoginPage />} />
-              <Route path="signup" element={<SignupPage />} />
-            </Route>
+              {/* Auth Layout */}
+              <Route path="/auth" element={<AuthLayout />}>
+                <Route index element={<Navigate to="/auth/login" replace />} />
+                <Route path="login" element={<LoginPage />} />
+                <Route path="signup" element={<SignupPage />} />
+              </Route>
 
-            {/* Dashboard Layout (Protected) */}
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <DashboardLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<DashboardHome />} />
-              <Route path="settings" element={<div className="card p-6 bg-white">User Settings Page</div>} />
-              <Route path="orders" element={<OrderHistoryPage />} />
-              <Route path="orders/:orderId" element={<OrderDetailsPage />} />
-              <Route path="orders/:orderId/track" element={<TrackingPage />} />
-              <Route path="shipping" element={<ShippingPage />} />
-              <Route path="add-product" element={<AddProduct />} />
-            </Route>
+              {/* Dashboard Layout (Protected) */}
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <DashboardLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<DashboardHome />} />
+                <Route path="settings" element={<div className="card p-6 bg-white">User Settings Page</div>} />
+                <Route path="orders" element={<OrderHistoryPage />} />
+                <Route path="orders/:orderId" element={<OrderDetailsPage />} />
+                <Route path="orders/:orderId/track" element={<TrackingPage />} />
+                <Route path="shipping" element={<ShippingPage />} />
+                <Route path="add-product" element={<AddProduct />} />
+              </Route>
 
-            {/* PART 1 — Separate Admin Route */}
-            <Route
-              path="/admindashboard"
-              element={
-                <ProtectedRoute allowedRoles={['admin']}>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              }
-            />
+              {/* PART 1 — Separate Admin Route */}
+              <Route
+                path="/admindashboard"
+                element={
+                  <ProtectedRoute allowedRoles={['admin']}>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              />
 
-            <Route path="/checkout" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
+              <Route path="/checkout" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
 
-            {/* 404 Fallback */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </Router>
-      </CartProvider>
-    </AuthProvider>
+              {/* 404 Fallback */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Router>
+        </CartProvider>
+      </AuthProvider>
+    </HelmetProvider>
   );
 }
 

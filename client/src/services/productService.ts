@@ -16,10 +16,16 @@ export const getProductById = async (id: string) => {
     return response.data.data.product as Product;
 };
 
+export const searchProducts = async (query: string) => {
+    const response = await api.get(`/products/search?q=${encodeURIComponent(query)}`);
+    return response.data.data.products as Product[];
+};
+
 const productService = {
     getProductsByCategory,
     getAllProducts,
     getProductById,
+    searchProducts,
 };
 
 export default productService;

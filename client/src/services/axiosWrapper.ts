@@ -1,5 +1,22 @@
 import { type AxiosError } from 'axios';
 import api from './api';
+import toast from 'react-hot-toast';
+
+// Add a global interceptor for error handling
+api.interceptors.response.use(
+    (response) => response,
+    (error: AxiosError) => {
+        const message = (error.response?.data as any)?.message || 'Something went wrong';
+
+        // Don't show toast for 401 (handled by AuthContext/App logic) or internal skips
+        if (error.response?.status !== 401 && error.config?.url !== '/health') {
+            toast.error(message, {
+                id: 'global-api-error', // Prevent duplicate toasts
+            });
+        }
+        return Promise.reject(error);
+    }
+);
 
 export type ErrorKind = 'network' | 'server' | 'unauthenticated' | 'client' | 'ignore';
 

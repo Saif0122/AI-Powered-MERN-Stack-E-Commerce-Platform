@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import productService from '../../services/productService';
 import type { Product } from '../../types';
+import ProductCard from '../../components/ProductCard';
+import { ProductCardSkeleton } from '../../components/common/Skeleton';
+import EmptyState from '../../components/common/EmptyState';
+import SEO from '../../components/common/SEO';
+import { ChevronRight, Filter, Layers, LayoutGrid } from 'lucide-react';
 
 const CategoryProductsPage: React.FC = () => {
     const { categoryId } = useParams<{ categoryId: string }>();
@@ -22,7 +27,6 @@ const CategoryProductsPage: React.FC = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             if (!categoryId) {
-                console.error('CategoryId is missing');
                 setError('Category ID is missing');
                 setLoading(false);
                 return;
@@ -31,14 +35,9 @@ const CategoryProductsPage: React.FC = () => {
             try {
                 setLoading(true);
                 setError(null);
-                console.log(`Fetching products for category: ${categoryId}`);
                 const data = await productService.getProductsByCategory(categoryId);
                 setProducts(data);
-                if (data.length === 0) {
-                    console.log('No products available in this category yet.');
-                }
             } catch (err: any) {
-                console.error('API Error fetching category products:', err);
                 setError('Failed to load products for this category. Please try again later.');
             } finally {
                 setLoading(false);
@@ -48,66 +47,106 @@ const CategoryProductsPage: React.FC = () => {
         fetchProducts();
     }, [categoryId]);
 
+    const categoryName = getCategoryName();
+
     if (loading) {
         return (
-            <div className="max-w-7xl mx-auto px-4 py-12 flex justify-center items-center min-h-[400px]">
-                <div className="w-10 h-10 border-4 border-brand-200 border-t-brand-600 rounded-full animate-spin"></div>
+            <div className="bg-white min-h-screen">
+                <div className="max-w-7xl mx-auto px-8 py-20">
+                    <div className="animate-pulse space-y-4 mb-20">
+                        <div className="h-4 bg-slate-100 rounded w-24"></div>
+                        <div className="h-16 bg-slate-100 rounded w-96"></div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-12">
+                        {[1, 2, 3, 4, 5, 6, 7, 8].map(i => <ProductCardSkeleton key={i} />)}
+                    </div>
+                </div>
             </div>
         );
     }
 
-    const categoryName = getCategoryName();
+    if (!loading && products.length === 0 && !error) {
+        return (
+            <EmptyState
+                icon={Layers}
+                title="Category Archive Empty"
+                description="We haven't cataloged any assets in this specific sector yet. Explore other segments or check back during our next synchronization."
+                actionText="View All Collections"
+                actionLink="/shop"
+            />
+        );
+    }
 
     return (
-        <div className="max-w-7xl mx-auto px-4 py-12">
-            <div className="flex items-center space-x-2 text-sm text-slate-500 mb-8">
-                <Link to="/shop" className="hover:text-brand-600">Shop</Link>
-                <span>/</span>
-                <span className="capitalize">{categoryName}</span>
+        <div className="bg-white min-h-screen pb-32">
+            <SEO
+                title={`${categoryName} | MercatoX Premium`}
+                description={`Explore our curated collection of high-value assets in the ${categoryName} category.`}
+            />
+
+            {/* Premium Header */}
+            <div className="relative bg-slate-950 pt-32 pb-40 overflow-hidden">
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-600/10 blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2"></div>
+                <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-600/5 blur-[100px] rounded-full -translate-x-1/2 translate-y-1/2"></div>
+
+                <div className="max-w-7xl mx-auto px-8 relative z-10">
+                    <div className="flex items-center gap-2 text-brand-500 font-black uppercase tracking-widest text-[10px] mb-6">
+                        <Link to="/shop" className="hover:text-white transition-colors">Marketplace</Link>
+                        <ChevronRight size={10} />
+                        <span className="text-white/60">{categoryName}</span>
+                    </div>
+
+                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+                        <div>
+                            <h1 className="text-7xl font-black text-white tracking-tighter leading-none mb-6 capitalize">
+                                {categoryName} <br /> Sector
+                            </h1>
+                            <p className="text-white/40 max-w-xl text-lg font-medium italic">
+                                Accessing the global reserve of specialized assets. Every item is verified for quality and logistical integrity.
+                            </p>
+                        </div>
+                        <div className="flex items-center gap-6">
+                            <div className="text-right">
+                                <p className="text-[10px] text-white/40 font-black uppercase tracking-widest">Active Inventory</p>
+                                <p className="text-3xl font-black text-white">{products.length} Units</p>
+                            </div>
+                            <div className="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-brand-500 backdrop-blur-md">
+                                <LayoutGrid size={28} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <h1 className="text-3xl font-bold text-slate-900 mb-8 capitalize">
-                {categoryName} Collection
-            </h1>
-
-            {error && (
-                <div className="bg-rose-50 border-2 border-rose-100 text-rose-600 p-6 rounded-3xl mb-8 flex items-center gap-4 animate-shake">
-                    <span className="text-2xl">⚠️</span>
-                    <p className="font-bold">{error}</p>
-                </div>
-            )}
-
-            {products.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                    {products.map((p) => (
-                        <div key={p._id} className="group bg-white border border-slate-100 p-4 rounded-3xl shadow-sm hover:shadow-xl transition-all block">
-                            <div className="aspect-[4/3] bg-slate-50 rounded-2xl mb-4 overflow-hidden border border-slate-100/50 flex items-center justify-center">
-                                {p.images && p.images[0] ? (
-                                    <img src={p.images[0]} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                                ) : (
-                                    <span className="text-5xl opacity-40">📦</span>
-                                )}
-                            </div>
-                            <h3 className="font-bold text-slate-900 truncate">{p.title}</h3>
-                            <p className="text-brand-600 font-extrabold mt-1">${p.price}</p>
-                            <Link to={`/shop/product/${p._id}`} className="mt-4 btn btn-primary w-full text-center py-2 text-sm">
-                                View Details
-                            </Link>
+            {/* Results Grid */}
+            <div className="max-w-7xl mx-auto px-8 -mt-16 relative z-20">
+                <div className="bg-white rounded-[3.5rem] p-12 shadow-2xl shadow-slate-900/10 border border-slate-100">
+                    <div className="flex items-center justify-between mb-12">
+                        <div className="flex items-center gap-3">
+                            <div className="w-1.5 h-6 bg-brand-600 rounded-full"></div>
+                            <h2 className="text-2xl font-black text-slate-950 tracking-tight">Available Assets</h2>
                         </div>
-                    ))}
-                </div>
-            ) : (
-                !error && (
-                    <div className="text-center py-20 bg-slate-50 rounded-[40px] border-2 border-dashed border-slate-200">
-                        <span className="text-6xl mb-4 block">📂</span>
-                        <h2 className="text-2xl font-black text-slate-900 mb-2">ARCHIVE_EMPTY</h2>
-                        <p className="text-slate-500 font-medium">No products available in this category yet.</p>
-                        <Link to="/shop" className="inline-block mt-8 bg-slate-900 text-white px-8 py-3 rounded-2xl font-bold hover:bg-slate-800 transition-all">
-                            Browse All Categories
-                        </Link>
+                        <button className="flex items-center gap-2 bg-slate-50 px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors border border-slate-100">
+                            <Filter size={14} /> Filter Logic
+                        </button>
                     </div>
-                )
-            )}
+
+                    {error ? (
+                        <div className="py-20 text-center">
+                            <div className="w-20 h-20 bg-red-50 text-red-500 rounded-3xl flex items-center justify-center mx-auto mb-6 text-4xl">⚠️</div>
+                            <h3 className="text-2xl font-black text-slate-900 mb-2">Synchronization Fault</h3>
+                            <p className="text-slate-500 italic mb-8">{error}</p>
+                            <button onClick={() => window.location.reload()} className="bg-slate-900 text-white px-8 py-3 rounded-2xl font-black">Reload Terminal</button>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+                            {products.map((product) => (
+                                <ProductCard key={product._id} product={product} />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </div>
         </div>
     );
 };
