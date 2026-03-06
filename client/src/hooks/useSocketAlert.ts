@@ -20,7 +20,8 @@ export const useSocketAlert = () => {
         if (!user) return;
 
         // Initialize socket
-        const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000');
+        // VITE_SOCKET_URL must point directly to Railway (cannot go through Vercel proxy — WebSockets)
+        const socket = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000');
         socketRef.current = socket;
 
         // Join appropriate room

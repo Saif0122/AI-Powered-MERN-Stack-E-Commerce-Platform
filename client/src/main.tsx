@@ -4,8 +4,8 @@ import App from './App.tsx'
 import './index.css'
 import ErrorBoundary from './components/ErrorBoundary.tsx'
 
-if (!import.meta.env.VITE_API_URL) {
-  console.warn('⚠️ WARNING: VITE_API_URL environment variable is missing. API calls may fail.');
+if (!import.meta.env.VITE_SOCKET_URL) {
+  console.warn('⚠️ WARNING: VITE_SOCKET_URL is not set. Real-time low-stock alerts may not work.');
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
