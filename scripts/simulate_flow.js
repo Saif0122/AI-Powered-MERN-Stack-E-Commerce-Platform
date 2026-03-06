@@ -9,7 +9,7 @@ import 'dotenv/config';
  * 4. Trigger stock alerts
  */
 
-const API_URL = process.env.API_URL || 'http://localhost:5000/api/v1';
+const API_URL = process.env.API_URL || 'https://ai-powered-mern-stack-e-commerce-platform-production.up.railway.app/api/v1';
 const USER_CREDENTIALS = {
     email: 'user@example.com',
     password: 'password123'
