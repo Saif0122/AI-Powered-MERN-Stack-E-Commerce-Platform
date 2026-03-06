@@ -9,14 +9,43 @@ const MainLayout: React.FC = () => {
 
     const cartCount = cart?.items.reduce((acc, item) => acc + item.quantity, 0) || 0;
 
+    // React.useEffect(() => {
+    //     const handleContextMenu = (e: MouseEvent) => {
+    //         e.preventDefault();
+    //         alert("This website content is protected by copyright.");
+    //     };
+
+    //     const handleKeyDown = (e: KeyboardEvent) => {
+    //         // Block Ctrl+U, Ctrl+C, Ctrl+S, Ctrl+Shift+I, F12
+    //         if (
+    //             (e.ctrlKey && (e.key === 'u' || e.key === 'c' || e.key === 's')) ||
+    //             (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+    //             e.key === 'F12'
+    //         ) {
+    //             e.preventDefault();
+    //             alert("This website content is protected by copyright.");
+    //         }
+    //     };
+
+    //     window.addEventListener('contextmenu', handleContextMenu);
+    //     window.addEventListener('keydown', handleKeyDown);
+
+    //     return () => {
+    //         window.removeEventListener('contextmenu', handleContextMenu);
+    //         window.removeEventListener('keydown', handleKeyDown);
+    //     };
+    // }, []);
+
+
     React.useEffect(() => {
+        if (process.env.NODE_ENV === "development") return;
+
         const handleContextMenu = (e: MouseEvent) => {
             e.preventDefault();
             alert("This website content is protected by copyright.");
         };
 
         const handleKeyDown = (e: KeyboardEvent) => {
-            // Block Ctrl+U, Ctrl+C, Ctrl+S, Ctrl+Shift+I, F12
             if (
                 (e.ctrlKey && (e.key === 'u' || e.key === 'c' || e.key === 's')) ||
                 (e.ctrlKey && e.shiftKey && e.key === 'I') ||

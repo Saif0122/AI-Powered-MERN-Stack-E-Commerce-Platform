@@ -8,7 +8,7 @@ import {
     TrendingUp, ShoppingBag, DollarSign, Download,
     ChevronRight, ArrowUpRight, ArrowDownRight, Activity
 } from 'lucide-react';
-import axios from 'axios';
+import api from '../../../services/api';
 import { exportToCSV } from '../../../utils/exportUtils';
 
 interface CategoryBreakdown {
@@ -44,9 +44,9 @@ const AdminAnalytics = () => {
             setLoading(true);
             try {
                 const [statsRes, salesRes, productsRes] = await Promise.all([
-                    axios.get('/api/v1/analytics/admin'),
-                    axios.get(`/api/v1/analytics/sales?range=${range}`),
-                    axios.get('/api/v1/analytics/top-products?limit=5')
+                    api.get('/analytics/admin'),
+                    api.get(`/analytics/sales?range=${range}`),
+                    api.get('/analytics/top-products?limit=5')
                 ]);
 
                 setStats(statsRes.data.data);

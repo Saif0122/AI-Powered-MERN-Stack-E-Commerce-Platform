@@ -4,7 +4,11 @@ const API_BASE = import.meta.env.VITE_API_URL;
 
 const api = axios.create({
     baseURL: API_BASE,
+    timeout: 10000,
     withCredentials: true, // Important for cookies
+    headers: {
+        'Content-Type': 'application/json',
+    },
 });
 
 // Request interceptor for Bearer token

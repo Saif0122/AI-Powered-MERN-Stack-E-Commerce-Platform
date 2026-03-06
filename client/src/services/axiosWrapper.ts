@@ -1,4 +1,5 @@
-import axios, { AxiosError } from 'axios';
+import { type AxiosError } from 'axios';
+import api from './api';
 
 export type ErrorKind = 'network' | 'server' | 'unauthenticated' | 'client' | 'ignore';
 
@@ -9,22 +10,6 @@ export interface FetchResult<T> {
     status?: number;
     error?: any;
 }
-
-const API_BASE = import.meta.env.VITE_API_URL;
-
-const api = axios.create({
-    baseURL: API_BASE,
-    timeout: 10000,
-    withCredentials: true,
-});
-
-api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');
-    if (token && config.headers) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-});
 
 export const fetchWithKind = async <T>(url: string, opts: { method?: string; data?: any; params?: any; timeout?: number } = {}): Promise<FetchResult<T>> => {
     try {
@@ -39,7 +24,7 @@ export const fetchWithKind = async <T>(url: string, opts: { method?: string; dat
     } catch (error) {
         const err = error as AxiosError;
         let kind: ErrorKind = 'client';
-        let status = err.response?.status;
+        const status = err.response?.status;
 
         if (url.includes('favicon.ico')) {
             kind = 'ignore';
