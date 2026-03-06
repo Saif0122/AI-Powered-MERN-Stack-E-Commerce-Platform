@@ -112,8 +112,13 @@ const ProductDetailsPage: React.FC = () => {
     };
 
     if (loading) return (
-        <div className="max-w-7xl mx-auto px-8 py-24">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 animate-pulse">
+        <div className="max-w-7xl mx-auto px-8 py-24 text-center">
+            <div className="mb-12">
+                <RefreshCcw size={48} className="animate-spin text-brand-600 mx-auto mb-4" />
+                <h2 className="text-2xl font-black text-slate-900 tracking-tighter">Synchronizing Product Data...</h2>
+                <p className="text-slate-500 font-medium italic">Establishing secure connection to marketplace nodes.</p>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 animate-pulse text-left">
                 <div className="aspect-square bg-slate-100 rounded-[3rem]"></div>
                 <div className="space-y-8">
                     <div className="h-4 bg-slate-100 rounded w-1/4"></div>
@@ -135,11 +140,11 @@ const ProductDetailsPage: React.FC = () => {
         </div>
     );
 
-    const hasSale = product.salePrice && product.salePrice < product.price;
+    const hasSale = product?.salePrice && product?.price && product.salePrice < product.price;
 
     return (
         <div className="bg-white">
-            <SEO title={product.title} description={product.description.substring(0, 160)} />
+            <SEO title={product?.title || 'Product Details'} description={product?.description?.substring(0, 160) || ''} />
 
             <div className="max-w-7xl mx-auto px-8 py-16">
                 {/* Breadcrumbs */}
@@ -148,17 +153,17 @@ const ProductDetailsPage: React.FC = () => {
                     <ChevronRight size={12} />
                     <Link to="/shop" className="hover:text-brand-600 transition-colors">Shop</Link>
                     <ChevronRight size={12} />
-                    <span className="text-slate-900">{product.title}</span>
+                    <span className="text-slate-900">{product?.title}</span>
                 </nav>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
                     {/* Image Gallery */}
                     <div className="space-y-8 sticky top-24">
                         <div className="aspect-square bg-slate-50 rounded-[3rem] overflow-hidden border border-slate-100 flex items-center justify-center text-8xl relative group">
-                            {product.images?.length > 0 ? (
+                            {product?.images && product.images.length > 0 ? (
                                 <img
                                     src={product.images[activeImage]}
-                                    alt={product.title}
+                                    alt={product?.title}
                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
                             ) : (
@@ -170,7 +175,7 @@ const ProductDetailsPage: React.FC = () => {
                             </button>
                         </div>
 
-                        {product.images?.length > 1 && (
+                        {product?.images && product.images.length > 1 && (
                             <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
                                 {product.images.map((img, idx) => (
                                     <button
@@ -202,20 +207,20 @@ const ProductDetailsPage: React.FC = () => {
                                 </div>
                             </div>
 
-                            <h1 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[0.9]">{product.title}</h1>
+                            <h1 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[0.9]">{product?.title}</h1>
 
                             <div className="flex items-center gap-6 py-2">
                                 <div className="flex items-center gap-2">
                                     <div className="flex items-center text-amber-400">
                                         {[...Array(5)].map((_, i) => (
-                                            <Star key={i} size={16} fill={i < Math.floor(product.ratingsAverage || 5) ? 'currentColor' : 'none'} className={i < Math.floor(product.ratingsAverage || 5) ? '' : 'text-slate-200'} />
+                                            <Star key={i} size={16} fill={i < Math.floor(product?.ratingsAverage || 5) ? 'currentColor' : 'none'} className={i < Math.floor(product?.ratingsAverage || 5) ? '' : 'text-slate-200'} />
                                         ))}
                                     </div>
-                                    <span className="text-sm font-black text-slate-900">{product.ratingsAverage || 4.9}</span>
+                                    <span className="text-sm font-black text-slate-900">{product?.ratingsAverage || 4.9}</span>
                                 </div>
                                 <div className="flex items-center gap-2 text-slate-400">
                                     <MessageSquare size={16} />
-                                    <span className="text-sm font-bold uppercase tracking-widest">{product.ratingsQuantity || 0} Professional Reviews</span>
+                                    <span className="text-sm font-bold uppercase tracking-widest">{product?.ratingsQuantity || 0} Professional Reviews</span>
                                 </div>
                             </div>
                         </div>
@@ -243,7 +248,7 @@ const ProductDetailsPage: React.FC = () => {
                                 <Award size={16} className="text-brand-600" /> Product Intelligence
                             </div>
                             <p className="text-slate-600 leading-relaxed text-lg font-medium text-balance">
-                                {product.description}
+                                {product?.description}
                             </p>
                         </div>
 
@@ -252,11 +257,11 @@ const ProductDetailsPage: React.FC = () => {
                             <div className="flex items-center justify-between p-6 bg-white border border-slate-100 rounded-[2rem] shadow-sm">
                                 <div className="flex items-center gap-4">
                                     <div className="w-14 h-14 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center text-2xl font-black">
-                                        {product.vendor.name ? product.vendor.name.charAt(0) : 'S'}
+                                        {product?.vendor && typeof product.vendor !== 'string' && product.vendor.name ? product.vendor.name.charAt(0) : 'S'}
                                     </div>
                                     <div>
                                         <div className="flex items-center gap-1.5">
-                                            <h4 className="font-black text-slate-900 leading-none">{product.vendor.name || 'Premium Seller'}</h4>
+                                            <h4 className="font-black text-slate-900 leading-none">{product?.vendor && typeof product.vendor !== 'string' ? product.vendor.name || 'Premium Seller' : 'Premium Seller'}</h4>
                                             <UserCheck size={14} className="text-blue-500" />
                                         </div>
                                         <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">Verified Logistics Partner</p>

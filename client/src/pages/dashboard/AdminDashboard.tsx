@@ -42,38 +42,26 @@ const AdminDashboard: React.FC = () => {
 
     return (
         <div className="space-y-8 animate-in fade-in duration-700">
-            <header className="flex justify-between items-center">
+            <header className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-900 tracking-tight">PLATFORM_COMMAND_CENTER</h1>
-                    <p className="text-slate-500 font-bold uppercase tracking-widest text-xs mt-1">Real-time global operations overview</p>
+                    <h1 className="text-4xl font-black text-slate-950 tracking-tight leading-none">Command <span className="text-brand-600">Terminal</span></h1>
+                    <p className="text-slate-400 font-black uppercase tracking-[0.2em] text-[10px] mt-2">Authenticated: Platform Operations Override</p>
                 </div>
-                <div className="flex items-center gap-4">
-                    <div className="flex bg-slate-100 p-1 rounded-2xl border border-slate-200 overflow-x-auto max-w-full">
+                <div className="flex bg-white/50 backdrop-blur-md p-1.5 rounded-[2rem] border border-slate-200 shadow-sm overflow-x-auto max-w-full">
+                    {[
+                        { id: 'overview', label: 'Overview' },
+                        { id: 'users', label: 'User Index' },
+                        { id: 'products', label: 'Global Catalog' },
+                        { id: 'coupons', label: 'Promotions' }
+                    ].map((tab) => (
                         <button
-                            onClick={() => setActiveTab('overview')}
-                            className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'overview' ? 'bg-slate-900 text-white shadow-lg' : 'text-slate-500 hover:text-slate-900'}`}
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id as any)}
+                            className={`px-8 py-3 rounded-[1.5rem] text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === tab.id ? 'bg-slate-950 text-white shadow-xl shadow-slate-900/10' : 'text-slate-400 hover:text-slate-900'}`}
                         >
-                            Overview
+                            {tab.label}
                         </button>
-                        <button
-                            onClick={() => setActiveTab('users')}
-                            className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'users' ? 'bg-slate-900 text-white shadow-lg' : 'text-slate-500 hover:text-slate-900'}`}
-                        >
-                            User_Base
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('products')}
-                            className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'products' ? 'bg-slate-900 text-white shadow-lg' : 'text-slate-500 hover:text-slate-900'}`}
-                        >
-                            Inventory
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('coupons')}
-                            className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'coupons' ? 'bg-slate-900 text-white shadow-lg' : 'text-slate-500 hover:text-slate-900'}`}
-                        >
-                            Promos
-                        </button>
-                    </div>
+                    ))}
                 </div>
             </header>
 

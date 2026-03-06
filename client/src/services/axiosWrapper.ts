@@ -2,10 +2,19 @@ import { type AxiosError } from 'axios';
 import api from './api';
 import toast from 'react-hot-toast';
 
-// Add a global interceptor for error handling
+// Add a global interceptor for error handling and loading states
+api.interceptors.request.use((config) => {
+    window.dispatchEvent(new CustomEvent('api-loading', { detail: { type: 'start' } }));
+    return config;
+});
+
 api.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        window.dispatchEvent(new CustomEvent('api-loading', { detail: { type: 'complete' } }));
+        return response;
+    },
     (error: AxiosError) => {
+        window.dispatchEvent(new CustomEvent('api-loading', { detail: { type: 'complete' } }));
         const message = (error.response?.data as any)?.message || 'Something went wrong';
 
         // Don't show toast for 401 (handled by AuthContext/App logic) or internal skips

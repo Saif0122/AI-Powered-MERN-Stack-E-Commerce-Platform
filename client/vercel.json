@@ -3,6 +3,10 @@
     {
       "source": "/api/(.*)",
       "destination": "https://ai-powered-mern-stack-e-commerce-platform-production.up.railway.app/api/v1/$1"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
     }
   ]
 }

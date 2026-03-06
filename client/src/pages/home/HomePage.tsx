@@ -8,7 +8,7 @@ import type { Product } from '../../types';
 import ProductCard from '../../components/ProductCard';
 import { ProductCardSkeleton, CategorySkeleton } from '../../components/common/Skeleton';
 import SEO from '../../components/common/SEO';
-import { Sparkles, TrendingUp, Award, Zap, ArrowRight, Mail, Star, Quote } from 'lucide-react';
+import { Sparkles, TrendingUp, Award, Zap, ArrowRight, Mail, Star, Quote, ShieldCheck } from 'lucide-react';
 
 const HomePage: React.FC = () => {
     const [categories, setCategories] = useState<Category[]>([]);
@@ -18,6 +18,7 @@ const HomePage: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [recommendedProducts, setRecommendedProducts] = useState<Product[]>([]);
     const [recTitle, setRecTitle] = useState('Recommended for You');
+    const [subscribed, setSubscribed] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -274,22 +275,42 @@ const HomePage: React.FC = () => {
                         <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-black/10 blur-[80px] rounded-full"></div>
 
                         <div className="relative z-10 max-w-3xl mx-auto">
-                            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full font-black text-[10px] uppercase tracking-widest mb-8 border border-white/20">
-                                <Mail size={14} /> Intelligence Feed
-                            </div>
-                            <h2 className="text-5xl md:text-6xl font-black text-white mb-8 tracking-tighter">Stay Ahead of the Curve</h2>
-                            <p className="text-brand-50 text-xl mb-12 font-medium max-w-xl mx-auto">Join our private network for early product access and AI-curated market reports.</p>
-                            <form className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto" onSubmit={(e) => e.preventDefault()}>
-                                <input
-                                    type="email"
-                                    placeholder="Enter your professional email"
-                                    className="flex-grow bg-white/10 border border-white/20 backdrop-blur-xl px-8 py-5 rounded-[2rem] text-white placeholder:text-brand-200 outline-none focus:ring-4 focus:ring-white/20 transition-all font-bold text-lg"
-                                    required
-                                />
-                                <button className="bg-white text-brand-600 hover:bg-slate-100 px-12 py-5 rounded-[2rem] font-black text-lg transition-all shadow-2xl active:scale-95 whitespace-nowrap">
-                                    Subscribe
-                                </button>
-                            </form>
+                            {!subscribed ? (
+                                <>
+                                    <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full font-black text-[10px] uppercase tracking-widest mb-8 border border-white/20">
+                                        <Mail size={14} /> Intelligence Feed
+                                    </div>
+                                    <h2 className="text-5xl md:text-6xl font-black text-white mb-8 tracking-tighter">Stay Ahead of the Curve</h2>
+                                    <p className="text-brand-50 text-xl mb-12 font-medium max-w-xl mx-auto">Join our private network for early product access and AI-curated market reports.</p>
+                                    <form
+                                        className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto"
+                                        onSubmit={(e) => {
+                                            e.preventDefault();
+                                            setSubscribed(true);
+                                        }}
+                                    >
+                                        <input
+                                            type="email"
+                                            placeholder="Enter your professional email"
+                                            className="flex-grow bg-white/10 border border-white/20 backdrop-blur-xl px-8 py-5 rounded-[2rem] text-white placeholder:text-brand-200 outline-none focus:ring-4 focus:ring-white/20 transition-all font-bold text-lg"
+                                            required
+                                        />
+                                        <button className="bg-white text-brand-600 hover:bg-slate-100 px-12 py-5 rounded-[2rem] font-black text-lg transition-all shadow-2xl active:scale-95 whitespace-nowrap">
+                                            Subscribe
+                                        </button>
+                                    </form>
+                                </>
+                            ) : (
+                                <div className="space-y-6 py-6 animate-in zoom-in duration-500">
+                                    <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl">
+                                        <ShieldCheck size={40} className="text-brand-600" />
+                                    </div>
+                                    <h2 className="text-5xl font-black text-white tracking-tighter">Protocol Initialized</h2>
+                                    <p className="text-brand-50 text-xl font-medium max-w-lg mx-auto leading-relaxed">
+                                        Welcome to the network. Your credentials have been authenticated. Exclusive briefings will arrive in your inbox shortly.
+                                    </p>
+                                </div>
+                            )}
                             <p className="text-brand-300 text-xs mt-10 font-bold uppercase tracking-widest italic flex items-center justify-center gap-2">
                                 <Zap size={10} /> Exclusive insight — No spam guaranteed
                             </p>
