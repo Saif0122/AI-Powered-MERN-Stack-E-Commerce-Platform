@@ -52,7 +52,7 @@ app.use(helmet()); // Security headers
 app.use(cors({
     origin: [
         'http://localhost:5173',
-        'https://your-vercel-domain.vercel.app'
+        'https://ai-e-commerce-eight.vercel.app'
     ],
     credentials: true
 }));   // Enable CORS with Credentials for Dev and Production
