@@ -3,8 +3,8 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
     res.status(200).json({
-        status: 'ok',
-        time: new Date().toISOString()
+        status: 'success',
+        message: 'API is healthy'
     });
 });
 

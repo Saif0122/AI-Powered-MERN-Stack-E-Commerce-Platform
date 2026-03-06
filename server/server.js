@@ -50,11 +50,12 @@ const app = express();
 // ─── MIDDLEWARES ───────────────────────────────────────────────────────────
 app.use(helmet()); // Security headers
 app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));   // Enable CORS with Credentials for Dev
+    origin: [
+        'http://localhost:5173',
+        'https://your-vercel-domain.vercel.app'
+    ],
+    credentials: true
+}));   // Enable CORS with Credentials for Dev and Production
 app.use(express.json({ limit: '10kb' })); // Body parser
 app.use(cookieParser());
 app.use(requestLogger); // Custom request logging
@@ -85,10 +86,16 @@ app.use('/api/v1/health', healthRoute);
 app.get('/api/v1', (req, res) => {
     res.status(200).json({
         status: 'success',
-        message: 'MERCATOX API v1 - NexusAI Powered',
-        version: '1.0.0',
-        documentation: '/api/v1/docs', // Placeholder for docs
-        health: '/api/v1/health'
+        message: 'MercatoX API v1',
+        endpoints: {
+            health: '/api/v1/health',
+            products: '/api/v1/products',
+            auth: '/api/v1/auth',
+            categories: '/api/v1/categories',
+            cart: '/api/v1/cart',
+            wishlist: '/api/v1/wishlist',
+            orders: '/api/v1/orders'
+        }
     });
 });
 
