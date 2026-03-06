@@ -9,8 +9,8 @@ import AppError from '../utils/AppError.js';
  * @param {string} id - User ID.
  * @returns {string} - JWT token.
  */
-const signToken = (id) => {
-    return jwt.sign({ id }, env.JWT_SECRET, {
+const signToken = (id, role) => {
+    return jwt.sign({ id, role }, env.JWT_SECRET, {
         expiresIn: env.JWT_EXPIRES_IN,
     });
 };
@@ -22,7 +22,7 @@ const signToken = (id) => {
  * @param {Object} res - Express response object.
  */
 const createSendToken = (user, statusCode, res) => {
-    const token = signToken(user._id);
+    const token = signToken(user._id, user.role);
 
     const cookieOptions = {
         expires: new Date(
@@ -89,6 +89,22 @@ export const login = asyncHandler(async (req, res, next) => {
 
     // 3) If everything is ok, send token to client
     createSendToken(user, 200, res);
+});
+
+// @desc    Get current user profile
+// @route   GET /api/v1/auth/me
+// @access  Private
+export const getMe = asyncHandler(async (req, res, next) => {
+    // req.user is set by protect middleware
+    res.status(200).json({
+        success: true,
+        user: {
+            _id: req.user._id,
+            name: req.user.name,
+            email: req.user.email,
+            role: req.user.role,
+        },
+    });
 });
 
 // @desc    Get all users (Admin only)

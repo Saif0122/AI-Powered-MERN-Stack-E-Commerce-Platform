@@ -53,14 +53,6 @@ export const restrictTo = (...roles) => {
             );
         }
 
-        // Additional Security layer for Admin
-        if (req.user.role === 'admin') {
-            const superAdmin = process.env.SUPER_ADMIN_EMAIL;
-            if (!superAdmin || req.user.email !== superAdmin) {
-                return next(new AppError('Unauthorized administrative access', 403));
-            }
-        }
-
         next();
     };
 };
