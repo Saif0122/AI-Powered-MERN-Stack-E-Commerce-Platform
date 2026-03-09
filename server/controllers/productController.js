@@ -73,6 +73,44 @@ export const getProduct = asyncHandler(async (req, res, next) => {
     });
 });
 
+// @desc    Get a single product by Slug (with ID fallback)
+// @route   GET /api/v1/products/slug/:slug
+// @access  Public
+export const getProductBySlug = asyncHandler(async (req, res, next) => {
+    let product;
+    const { slug } = req.params;
+
+    // First attempt: match by slug
+    product = await Product.findOne({ slug })
+        .populate('vendor', 'name email')
+        .populate('category', 'name slug');
+
+    // Second attempt: Fallback to matching by ID if no slug was found (for older database records)
+    if (!product && mongoose.Types.ObjectId.isValid(slug)) {
+        product = await Product.findById(slug)
+            .populate('vendor', 'name email')
+            .populate('category', 'name slug');
+    }
+
+    if (!product) {
+        return next(new AppError('Product not found', 404));
+    }
+
+    // Log 'view' activity if user is authenticated
+    if (req.user) {
+        UserActivity.create({
+            user: req.user.id,
+            type: 'view',
+            product: product._id
+        }).catch(err => logger.error(`Failed to log view activity: ${err.message}`));
+    }
+
+    res.status(200).json({
+        status: 'success',
+        data: { product },
+    });
+});
+
 // @desc    Create a new product
 // @route   POST /api/v1/products
 // @access  Private (Vendor/Admin)

@@ -80,7 +80,7 @@ function App() {
                   <Route path="shop">
                     <Route index element={<CategoriesPage />} />
                     <Route path="category/:categoryId" element={<CategoryProductsPage />} />
-                    <Route path="product/:productId" element={<ProductDetailsPage />} />
+                    <Route path="product/:id" element={<ProductDetailsPage />} />
                     <Route path="search" element={<SearchPage />} />
                   </Route>
                 </Route>

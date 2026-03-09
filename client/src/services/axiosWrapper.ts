@@ -17,8 +17,9 @@ api.interceptors.response.use(
         window.dispatchEvent(new CustomEvent('api-loading', { detail: { type: 'complete' } }));
         const message = (error.response?.data as any)?.message || 'Something went wrong';
 
-        // Don't show toast for 401 (handled by AuthContext/App logic) or internal skips
-        if (error.response?.status !== 401 && error.config?.url !== '/health') {
+        // Don't show toast for 401 (handled by AuthContext/App logic), /health, or 404 on /auth/me
+        const isAuthMe404 = error.response?.status === 404 && error.config?.url?.includes('/auth/me');
+        if (error.response?.status !== 401 && error.config?.url !== '/health' && !isAuthMe404) {
             toast.error(message, {
                 id: 'global-api-error', // Prevent duplicate toasts
             });

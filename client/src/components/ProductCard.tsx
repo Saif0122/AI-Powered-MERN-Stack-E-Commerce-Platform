@@ -74,14 +74,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         >
             {/* Image Container */}
             <div className="aspect-square bg-slate-50 rounded-[1.5rem] mb-5 overflow-hidden border border-slate-100/50 flex items-center justify-center relative">
-                {product.images && product.images[0] ? (
+                {Array.isArray(product?.images) && product.images.length > 0 ? (
                     <img
                         src={product.images[0]}
-                        alt={product.title}
+                        alt={product?.title || "Product image"}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                 ) : (
-                    <span className="text-5xl opacity-20 filter grayscale">📦</span>
+                    <img
+                        src="https://placehold.co/600x600/f8fafc/94a3b8?text=Product+Image"
+                        alt={product?.title || "Placeholder image"}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-80"
+                    />
                 )}
 
                 {/* Badge */}
@@ -139,9 +143,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
                     <button
                         onClick={handleAddToCart}
-                        disabled={adding || product.stock === 0}
+                        disabled={adding || (product?.stock ?? 0) === 0}
                         className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all shadow-lg ${adding ? 'bg-slate-100' : 'bg-slate-900 text-white hover:bg-brand-600 active:scale-90 hover:shadow-brand-200'
-                            } ${product.stock === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            } ${(product?.stock ?? 0) === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                         {adding ? (
                             <span className="h-5 w-5 border-2 border-slate-400/30 border-t-slate-600 rounded-full animate-spin" />

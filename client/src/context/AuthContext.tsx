@@ -27,8 +27,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             try {
                 const response = await safeApi.get<any>('/auth/me');
                 if (response.ok) {
-                    setUser(response.data.user);
-                    localStorage.setItem('user', JSON.stringify(response.data.user));
+                    setUser(response.data.data.user);
+                    localStorage.setItem('user', JSON.stringify(response.data.data.user));
                 } else {
                     // Token might be invalid or expired
                     logout();

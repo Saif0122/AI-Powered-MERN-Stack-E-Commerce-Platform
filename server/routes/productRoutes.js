@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
     getAllProducts,
     getProduct,
+    getProductBySlug,
     getProductsByCategory,
     createProduct,
     updateProduct,
@@ -18,6 +19,7 @@ router.use('/:productId/reviews', reviewRouter);
 // Publicly available routes
 router.route('/').get(getAllProducts);
 router.route('/category/:categoryId').get(getProductsByCategory);
+router.route('/slug/:slug').get(getProductBySlug);  // New SEO-friendly slug route
 router.route('/:id').get(getProduct);
 
 // Protected and restricted routes (Only sellers and admins for viewing/updating, but only sellers for creating)

@@ -97,13 +97,15 @@ export const login = asyncHandler(async (req, res, next) => {
 export const getMe = asyncHandler(async (req, res, next) => {
     // req.user is set by protect middleware
     res.status(200).json({
-        success: true,
-        user: {
-            _id: req.user._id,
-            name: req.user.name,
-            email: req.user.email,
-            role: req.user.role,
-        },
+        status: 'success',
+        data: {
+            user: {
+                _id: req.user._id,
+                name: req.user.name,
+                email: req.user.email,
+                role: req.user.role,
+            }
+        }
     });
 });
 

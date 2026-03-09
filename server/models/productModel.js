@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import slugify from 'slugify';
 
 /**
  * Product Schema for MercatoX.
@@ -16,6 +17,11 @@ const productSchema = new mongoose.Schema(
             required: [true, 'A product must have a title'],
             trim: true,
             maxlength: [200, 'Title cannot exceed 200 characters'],
+        },
+        slug: {
+            type: String,
+            unique: true,
+            sparse: true,
         },
         description: {
             type: String,
@@ -89,6 +95,15 @@ const productSchema = new mongoose.Schema(
         toObject: { virtuals: true },
     }
 );
+
+// ─── DOCUMENT MIDDLEWARE ──────────────────────────────────────────────────
+// Runs before .save() and .create()
+productSchema.pre('save', function (next) {
+    if (this.isModified('title') || this.isNew) {
+        this.slug = slugify(this.title, { lower: true, strict: true });
+    }
+    next();
+});
 
 // Calculate discount percentage virtual
 productSchema.virtual('discountPercentage').get(function () {

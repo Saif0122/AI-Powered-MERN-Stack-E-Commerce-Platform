@@ -11,7 +11,7 @@ import { ShoppingCart, Heart, Star, ShieldCheck, Truck, RefreshCcw, Share2, Info
 import toast from 'react-hot-toast';
 
 const ProductDetailsPage: React.FC = () => {
-    const { productId } = useParams<{ productId: string }>();
+    const { id } = useParams<{ id: string }>();
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -29,11 +29,24 @@ const ProductDetailsPage: React.FC = () => {
         const fetchProduct = async () => {
             try {
                 setLoading(true);
-                const response = await safeApi.get<any>(`/products/${productId}`);
+                setError(null);
+                console.log("Product param (id):", id);
+
+                // Safely requesting backend by ID
+                const response = await safeApi.get<any>(`/products/${id}`);
+                console.log("API response:", response);
+
                 if (response.ok) {
-                    const p = response.data.data.product;
-                    setProduct(p);
-                    fetchRelated(p.title);
+                    const productData = response.data?.data?.product;
+                    if (!productData) {
+                        setError("Product not found");
+                        return;
+                    }
+                    setProduct(productData);
+
+                    if (productData.title) {
+                        fetchRelated(productData.title);
+                    }
                 } else {
                     if (response.error?.response?.status === 400 || response.error?.response?.status === 404) {
                         setError('Product not found');
@@ -53,7 +66,9 @@ const ProductDetailsPage: React.FC = () => {
                 setFetchingRelated(true);
                 const response = await safeApi.get<any>(`/recommendations?query=${encodeURIComponent(query)}&limit=4`);
                 if (response.ok) {
-                    setRelatedProducts(response.data.data.products);
+                    // Employ array validation as requested for stability
+                    const productsList = response.data?.data?.products;
+                    setRelatedProducts(Array.isArray(productsList) ? productsList : []);
                 }
             } catch (err) {
                 console.error('System error fetching related products', err);
@@ -62,11 +77,11 @@ const ProductDetailsPage: React.FC = () => {
             }
         };
 
-        if (productId) {
+        if (id) {
             fetchProduct();
             setActiveImage(0);
         }
-    }, [productId]);
+    }, [id]);
 
     const handleAddToCart = async () => {
         if (!product) return;
@@ -160,10 +175,10 @@ const ProductDetailsPage: React.FC = () => {
                     {/* Image Gallery */}
                     <div className="space-y-8 sticky top-24">
                         <div className="aspect-square bg-slate-50 rounded-[3rem] overflow-hidden border border-slate-100 flex items-center justify-center text-8xl relative group">
-                            {product?.images && product.images.length > 0 ? (
+                            {Array.isArray(product?.images) && product.images.length > 0 ? (
                                 <img
-                                    src={product.images[activeImage]}
-                                    alt={product?.title}
+                                    src={product.images[activeImage] || product.images[0]}
+                                    alt={product?.title || "Product image"}
                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
                             ) : (
@@ -175,7 +190,7 @@ const ProductDetailsPage: React.FC = () => {
                             </button>
                         </div>
 
-                        {product?.images && product.images.length > 1 && (
+                        {product?.images && product.images?.length > 1 && (
                             <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
                                 {product.images.map((img, idx) => (
                                     <button
@@ -201,10 +216,12 @@ const ProductDetailsPage: React.FC = () => {
                                         Flash Save {product.discountPercentage}% OFF
                                     </div>
                                 )}
-                                <div className={`flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full border ${product.stock > 0 ? 'bg-green-50 text-green-600 border-green-100' : 'bg-red-50 text-red-500 border-red-100'}`}>
-                                    <ShieldCheck size={12} />
-                                    {product.stock > 5 ? 'Guaranteed In Stock' : product.stock > 0 ? `Limited Stock: ${product.stock} Left` : 'Sold Out'}
-                                </div>
+                                <div className={`flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full border ${(product?.stock ?? 0) > 0 ? 'bg-green-50 text-green-600 border-green-100' : 'bg-red-50 text-red-500 border-red-100'}`}>                                    <ShieldCheck size={12} />
+                                    {(product?.stock ?? 0) > 5
+                                        ? 'Guaranteed In Stock'
+                                        : (product?.stock ?? 0) > 0
+                                            ? `Limited Stock: ${product?.stock} Left`
+                                            : 'Sold Out'}                                </div>
                             </div>
 
                             <h1 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[0.9]">{product?.title}</h1>
@@ -280,7 +297,7 @@ const ProductDetailsPage: React.FC = () => {
                         <div className="flex flex-col sm:flex-row gap-4 pt-4">
                             <button
                                 onClick={handleAddToCart}
-                                disabled={addingToCart || product.stock === 0}
+                                disabled={addingToCart || (product?.stock ?? 0) === 0}
                                 className="flex-grow bg-slate-900 text-white rounded-[1.5rem] py-5 text-xl font-black transition-all hover:bg-brand-600 hover:scale-[1.02] shadow-2xl shadow-slate-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed group"
                             >
                                 {addingToCart ? (
@@ -383,7 +400,7 @@ const ProductDetailsPage: React.FC = () => {
 
                             <div className="p-8 bg-slate-950 rounded-[2.5rem] text-white space-y-8 shadow-2xl shadow-slate-900/20">
                                 <div className="space-y-2">
-                                    <div className="text-6xl font-black text-brand-400 leading-none">{product.ratingsAverage || 5.0}</div>
+                                    <div className="text-6xl font-black text-brand-400 leading-none">{product?.ratingsAverage ?? 5.0}</div>
                                     <div className="flex items-center gap-1 text-amber-400">
                                         {[...Array(5)].map((_, i) => <Star key={i} size={20} fill="currentColor" />)}
                                     </div>

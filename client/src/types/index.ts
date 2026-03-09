@@ -11,6 +11,7 @@ export interface User {
 
 export interface Product {
     _id: string;
+    slug?: string;
     title: string;
     description: string;
     price: number;
