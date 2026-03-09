@@ -36,9 +36,9 @@ const CheckoutPage: React.FC = () => {
             }
         };
 
-        if (cart && cart.items.length > 0) {
+        if (cart && Array.isArray(cart.items) && cart.items.length > 0) {
             fetchIntent();
-        } else if (cart && cart.items.length === 0) {
+        } else if (cart && (!Array.isArray(cart.items) || cart.items.length === 0)) {
             setLoading(false);
         }
     }, [cart]);
@@ -77,7 +77,7 @@ const CheckoutPage: React.FC = () => {
         </div>
     );
 
-    if (!cart || cart.items.length === 0) return (
+    if (!cart || !Array.isArray(cart.items) || cart.items.length === 0) return (
         <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-8 text-center">
             <div className="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mb-8 text-5xl grayscale opacity-20">🛒</div>
             <h2 className="text-4xl font-black text-slate-900 tracking-tighter mb-4">Procurement Stack Empty</h2>
@@ -163,16 +163,20 @@ const CheckoutPage: React.FC = () => {
                             <div className="p-10 border-b border-slate-50">
                                 <h3 className="text-2xl font-black text-slate-900 tracking-tight mb-8">Order Hierarchy</h3>
                                 <div className="space-y-6 max-h-[300px] overflow-y-auto pr-4 scrollbar-hide">
-                                    {cart.items.map((item: any) => (
-                                        <div key={item.product._id} className="flex gap-4">
-                                            <div className="w-16 h-16 bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 flex-shrink-0">
-                                                <img src={item.product.images[0]} alt={item.product.title} className="w-full h-full object-cover" />
+                                    {Array.isArray(cart.items) && cart.items.map((item: any) => (
+                                        <div key={item.product?._id || Math.random()} className="flex gap-4">
+                                            <div className="w-16 h-16 bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 flex-shrink-0 relative">
+                                                <img
+                                                    src={Array.isArray(item.product?.images) && item.product.images.length > 0 ? item.product.images[0] : 'https://placehold.co/100x100/f8fafc/94a3b8?text=Image'}
+                                                    alt={item.product?.title || "Product"}
+                                                    className="w-full h-full object-cover"
+                                                />
                                             </div>
                                             <div className="flex-grow min-w-0">
-                                                <h4 className="font-black text-slate-900 text-sm truncate">{item.product.title}</h4>
-                                                <p className="text-xs text-slate-400 font-bold">Qty: {item.quantity}</p>
+                                                <h4 className="font-black text-slate-900 text-sm truncate">{item.product?.title || "Unknown Product"}</h4>
+                                                <p className="text-xs text-slate-400 font-bold">Qty: {item.quantity || 1}</p>
                                             </div>
-                                            <p className="font-black text-slate-900 text-sm">${((item.product.salePrice || item.product.price) * item.quantity).toFixed(2)}</p>
+                                            <p className="font-black text-slate-900 text-sm">${(((item.product?.salePrice || item.product?.price) || 0) * (item.quantity || 1)).toFixed(2)}</p>
                                         </div>
                                     ))}
                                 </div>
