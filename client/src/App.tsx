@@ -21,7 +21,7 @@ import DashboardLayout from './layouts/DashboardLayout';
 // Pages
 import HomePage from './pages/home/HomePage';
 import Recommendations from './pages/Recommendations';
-import CategoriesPage from './pages/shop/CategoriesPage';
+import ShopPage from './pages/shop/ShopPage';
 import CategoryProductsPage from './pages/shop/CategoryProductsPage';
 import ProductDetailsPage from './pages/shop/ProductDetailsPage';
 import SearchPage from '../src/pages/shop/SearchPage';
@@ -78,7 +78,7 @@ function App() {
 
                   {/* Shop Sub-routes */}
                   <Route path="shop">
-                    <Route index element={<CategoriesPage />} />
+                    <Route index element={<ShopPage />} />
                     <Route path="category/:categoryId" element={<CategoryProductsPage />} />
                     <Route path="product/:id" element={<ProductDetailsPage />} />
                     <Route path="search" element={<SearchPage />} />

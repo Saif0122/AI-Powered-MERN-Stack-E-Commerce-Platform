@@ -3,7 +3,7 @@ import axios from 'axios';
 // In production (Vercel), VITE_API_URL is not set → falls back to '/api',
 // which Vercel rewrites to the Railway backend (no CORS, same-origin request).
 // In local dev, set VITE_API_URL=/api in .env and enable the Vite dev proxy in vite.config.ts.
-const API_BASE = import.meta.env.VITE_API_URL || "/api";
+const API_BASE = import.meta.env.VITE_API_URL || "/api/v1";
 
 const api = axios.create({
     baseURL: API_BASE,
