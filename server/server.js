@@ -25,6 +25,7 @@ import wishlistRoutes from './routes/wishlistRoutes.js';
 import couponRoutes from './routes/couponRoutes.js';
 import vendorRoutes from './routes/vendorRoutes.js';
 import analyticsRoutes from './routes/analyticsRoutes.js';
+import webhookRoutes from './routes/webhookRoutes.js';
 import { initSocket } from './config/socket.js';
 import exampleRoutes from './routes/exampleRoutes.js';
 
@@ -56,7 +57,14 @@ app.use(cors({
     ],
     credentials: true
 }));   // Enable CORS with Credentials for Dev and Production
-app.use(express.json({ limit: '10kb' })); // Body parser
+app.use(express.json({
+    limit: '10kb',
+    verify: (req, res, buf) => {
+        if (req.originalUrl.startsWith('/api/v1/webhooks')) {
+            req.rawBody = buf;
+        }
+    }
+})); // Body parser
 app.use(cookieParser());
 app.use(requestLogger); // Custom request logging
 
@@ -114,6 +122,7 @@ app.use('/api/v1/cart', cartRoutes);
 app.use('/api/v1/shipping', addressRoutes);
 app.use('/api/v1/orders', orderRoutes);
 app.use('/api/v1/payments', paymentRoutes);
+app.use('/api/v1/webhooks', webhookRoutes);
 app.use('/api/v1/wishlist', wishlistRoutes);
 app.use('/api/v1/coupons', couponRoutes);
 app.use('/api/v1/vendor', vendorRoutes);

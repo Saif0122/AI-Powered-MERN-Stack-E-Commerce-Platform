@@ -57,6 +57,18 @@ const orderSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
+        stripeSessionId: {
+            type: String,
+            unique: true,
+            sparse: true,
+        },
+        isFlagged: {
+            type: Boolean,
+            default: false,
+        },
+        fraudReason: {
+            type: String,
+        },
     },
     {
         timestamps: true,
