@@ -121,7 +121,7 @@ const AdminDashboard: React.FC = () => {
                                     <h3 className="text-base md:text-lg font-black text-slate-900 tracking-tight">REVENUE_GROWTH_MATRIX</h3>
                                     <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest">Last 7 days performance</p>
                                 </div>
-                                <TrendingUp className="text-brand-500" size={18} className="md:w-5 md:h-5" />
+                                <TrendingUp size={18} className="text-brand-500 md:w-5 md:h-5" />
                             </div>
                             <div className="h-[300px] w-full">
                                 <ResponsiveContainer width="100%" height="100%">
@@ -163,7 +163,7 @@ const AdminDashboard: React.FC = () => {
                                     <h3 className="text-base md:text-lg font-black text-slate-900 tracking-tight">OPERATIONAL_STATUS_PIE</h3>
                                     <p className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest">Order distribution metrics</p>
                                 </div>
-                                <Activity className="text-blue-500" size={18} className="md:w-5 md:h-5" />
+                                <Activity size={18} className="text-blue-500 md:w-5 md:h-5" />
                             </div>
                             <div className="h-[300px] w-full flex flex-col sm:flex-row items-center gap-4 sm:gap-0">
                                 <div className="w-full sm:w-2/3 h-full">
