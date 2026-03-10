@@ -9,7 +9,7 @@ export default defineConfig({
     proxy: {
       // Local dev: forward all /api/v1/* requests to the local Express backend
       '/api/v1': {
-        target: 'http://localhost:5000',
+        target: 'https://ai-powered-mern-stack-e-commerce-platform-production.up.railway.app',
         changeOrigin: true,
         // No rewrite needed — path is forwarded as-is to the backend
       },
