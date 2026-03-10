@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://ai-powered-mern-stack-e-commerce-platform-production.up.railway.app/api/v1/$1"
+      "destination": "http://localhost:5173/api/v1/"
     },
     {
       "source": "/((?!api/).*)",

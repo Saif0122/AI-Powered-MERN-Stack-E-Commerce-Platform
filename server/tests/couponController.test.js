@@ -11,7 +11,7 @@ jest.unstable_mockModule('../models/couponModel.js', () => ({
     }
 }));
 
-const { applyCoupon } = await import('../controllers/couponController.js');
+const { applyCoupon, createCoupon } = await import('../controllers/couponController.js');
 const { default: Coupon } = await import('../models/couponModel.js');
 
 describe('Coupon Controller', () => {
@@ -94,6 +94,68 @@ describe('Coupon Controller', () => {
             expect(next).toHaveBeenCalledWith(expect.objectContaining({
                 statusCode: 400,
                 message: expect.stringContaining('Minimum cart value')
+            }));
+        });
+    });
+
+    describe('createCoupon', () => {
+        it('should create coupon successfully', async () => {
+            req.body = {
+                code: 'NEWYEAR',
+                type: 'percentage',
+                value: 20,
+                usageLimit: 50
+            };
+
+            Coupon.create.mockResolvedValue({ ...req.body, _id: '123' });
+
+            await createCoupon(req, res, next);
+
+            expect(res.status).toHaveBeenCalledWith(201);
+            expect(res.json).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    status: 'success',
+                    data: expect.objectContaining({
+                        coupon: expect.objectContaining({ code: 'NEWYEAR' })
+                    })
+                })
+            );
+        });
+
+        it('should return 400 if code is missing', async () => {
+            req.body = { type: 'fixed', value: 10 };
+
+            await createCoupon(req, res, next);
+
+            expect(next).toHaveBeenCalledWith(expect.objectContaining({
+                statusCode: 400,
+                message: 'Coupon code is required'
+            }));
+        });
+
+        it('should return 400 if value is negative', async () => {
+            req.body = { code: 'BAD', type: 'fixed', value: -5 };
+
+            await createCoupon(req, res, next);
+
+            expect(next).toHaveBeenCalledWith(expect.objectContaining({
+                statusCode: 400,
+                message: 'A positive discount value is required'
+            }));
+        });
+
+        it('should return 400 for duplicate coupon code', async () => {
+            req.body = { code: 'DUP', type: 'fixed', value: 10 };
+
+            const duplicateError = new Error('Duplicate key');
+            duplicateError.code = 11000;
+            Coupon.create.mockRejectedValue(duplicateError);
+
+            await createCoupon(req, res, next);
+
+            expect(next).toHaveBeenCalledWith(expect.objectContaining({
+                statusCode: 400,
+                message: 'Coupon code already exists'
             }));
         });
     });

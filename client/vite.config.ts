@@ -7,11 +7,11 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
-      // Mirrors the Vercel rewrite: /api/* → Railway /api/v1/*
-      '/api': {
-        target: 'https://ai-powered-mern-stack-e-commerce-platform-production.up.railway.app/api/v1',
+      // Local dev: forward all /api/v1/* requests to the local Express backend
+      '/api/v1': {
+        target: 'http://localhost:5000',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        // No rewrite needed — path is forwarded as-is to the backend
       },
     },
   },

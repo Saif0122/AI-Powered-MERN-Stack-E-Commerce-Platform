@@ -11,6 +11,7 @@ import logger from '../utils/logger.js';
  * Get global admin statistics
  */
 export const getAdminStats = asyncHandler(async (req, res, next) => {
+    console.log('[DEBUG] Admin analytics accessed by:', req.user);
     const cacheKey = 'admin:stats:dashboard';
     const cachedStats = await redisService.getCached(cacheKey);
 

@@ -20,11 +20,11 @@ const couponSchema = new mongoose.Schema(
             validate: {
                 validator: function (val) {
                     if (this.type === 'percentage') {
-                        return val <= 90;
+                        return val > 0 && val <= 90;
                     }
                     return val > 0;
                 },
-                message: 'Percentage discount cannot exceed 90%',
+                message: 'Value must be positive and percentage cannot exceed 90%',
             },
         },
         minCartValue: {
@@ -33,11 +33,10 @@ const couponSchema = new mongoose.Schema(
         },
         expiresAt: {
             type: Date,
-            required: [true, 'Expiration date is required'],
         },
         usageLimit: {
             type: Number,
-            required: [true, 'Usage limit is required'],
+            default: 100,
         },
         usedCount: {
             type: Number,

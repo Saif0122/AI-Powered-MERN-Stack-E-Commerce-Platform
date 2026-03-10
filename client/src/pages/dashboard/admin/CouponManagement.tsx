@@ -5,25 +5,26 @@ import api from '../../../services/api';
 interface Coupon {
     _id: string;
     code: string;
-    discountType: 'percentage' | 'fixed';
-    discountValue: number;
-    expiryDate: string;
+    type: 'percentage' | 'fixed';
+    value: number;
+    expiresAt?: string;
     isActive: boolean;
-    usageLimit?: number;
-    usageCount: number;
+    usageLimit: number;
+    usedCount: number;
 }
 
 const CouponManagement: React.FC = () => {
     const [coupons, setCoupons] = useState<Coupon[]>([]);
     const [loading, setLoading] = useState(true);
-    const [isAdding, setIsAdding] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const [newCoupon, setNewCoupon] = useState({
         code: '',
-        discountType: 'percentage',
-        discountValue: 0,
-        expiryDate: '',
+        type: 'percentage',
+        value: 0,
+        expiresAt: '',
         usageLimit: 100
     });
+    const [isAdding, setIsAdding] = useState(false);
 
     const fetchCoupons = async () => {
         try {
@@ -42,19 +43,28 @@ const CouponManagement: React.FC = () => {
 
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError(null);
+
+        // Basic validation
+        if (!newCoupon.code.trim()) return setError('Code is required');
+        if (newCoupon.value <= 0) return setError('Value must be greater than 0');
+        if (newCoupon.type === 'percentage' && newCoupon.value > 90) {
+            return setError('Percentage cannot exceed 90%');
+        }
+
         try {
             await api.post('/coupons', newCoupon);
             setIsAdding(false);
             setNewCoupon({
                 code: '',
-                discountType: 'percentage',
-                discountValue: 0,
-                expiryDate: '',
+                type: 'percentage',
+                value: 0,
+                expiresAt: '',
                 usageLimit: 100
             });
             fetchCoupons();
-        } catch (err) {
-            alert('Failed to create coupon');
+        } catch (err: any) {
+            setError(err.response?.data?.message || 'Failed to create coupon');
         }
     };
 
@@ -88,55 +98,61 @@ const CouponManagement: React.FC = () => {
 
             {isAdding && (
                 <div className="card p-8 bg-white border-2 border-slate-900 rounded-[40px] shadow-2xl animate-in zoom-in-95 duration-300">
-                    <form onSubmit={handleCreate} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 items-end">
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Code_Label</label>
-                            <input
-                                type="text"
-                                value={newCoupon.code}
-                                onChange={(e) => setNewCoupon({ ...newCoupon, code: e.target.value.toUpperCase() })}
-                                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold focus:outline-none focus:border-brand-500"
-                                placeholder="SUMMER2026"
-                                required
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Type_Protocol</label>
-                            <select
-                                value={newCoupon.discountType}
-                                onChange={(e) => setNewCoupon({ ...newCoupon, discountType: e.target.value as any })}
-                                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold focus:outline-none"
+                    <form onSubmit={handleCreate} className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 items-end">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Code_Label</label>
+                                <input
+                                    type="text"
+                                    value={newCoupon.code}
+                                    onChange={(e) => setNewCoupon({ ...newCoupon, code: e.target.value.toUpperCase() })}
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold focus:outline-none focus:border-brand-500"
+                                    placeholder="SUMMER2026"
+                                    required
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Type_Protocol</label>
+                                <select
+                                    value={newCoupon.type}
+                                    onChange={(e) => setNewCoupon({ ...newCoupon, type: e.target.value as any })}
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold focus:outline-none"
+                                >
+                                    <option value="percentage">PERCENTAGE (%)</option>
+                                    <option value="fixed">FIXED ($)</option>
+                                </select>
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Value_Magnitude</label>
+                                <input
+                                    type="number"
+                                    value={newCoupon.value}
+                                    onChange={(e) => setNewCoupon({ ...newCoupon, value: Number(e.target.value) })}
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold focus:outline-none"
+                                    required
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Expiry_Timestamp</label>
+                                <input
+                                    type="date"
+                                    value={newCoupon.expiresAt}
+                                    onChange={(e) => setNewCoupon({ ...newCoupon, expiresAt: e.target.value })}
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold focus:outline-none"
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                className="bg-brand-600 text-white py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-brand-700 transition-all shadow-lg shadow-brand-100"
                             >
-                                <option value="percentage">PERCENTAGE (%)</option>
-                                <option value="fixed">FIXED ($)</option>
-                            </select>
+                                INIT_DEPLOY
+                            </button>
                         </div>
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Value_Magnitude</label>
-                            <input
-                                type="number"
-                                value={newCoupon.discountValue}
-                                onChange={(e) => setNewCoupon({ ...newCoupon, discountValue: Number(e.target.value) })}
-                                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold focus:outline-none"
-                                required
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Expiry_Timestamp</label>
-                            <input
-                                type="date"
-                                value={newCoupon.expiryDate}
-                                onChange={(e) => setNewCoupon({ ...newCoupon, expiryDate: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold focus:outline-none"
-                                required
-                            />
-                        </div>
-                        <button
-                            type="submit"
-                            className="bg-brand-600 text-white py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-brand-700 transition-all shadow-lg shadow-brand-100"
-                        >
-                            INIT_DEPLOY
-                        </button>
+                        {error && (
+                            <p className="text-rose-500 text-[10px] font-black uppercase tracking-widest animate-pulse">
+                                ERR_PROTOCOL_FAILURE: {error}
+                            </p>
+                        )}
                     </form>
                 </div>
             )}
@@ -168,7 +184,7 @@ const CouponManagement: React.FC = () => {
                                 </td>
                                 <td className="px-10 py-8 text-center">
                                     <span className="font-black text-slate-900 text-xl tracking-tighter">
-                                        {coupon.discountType === 'percentage' ? `${coupon.discountValue}%` : `$${coupon.discountValue}`}
+                                        {coupon.type === 'percentage' ? `${coupon.value}%` : `$${coupon.value}`}
                                     </span>
                                 </td>
                                 <td className="px-10 py-8 text-center">
@@ -176,16 +192,18 @@ const CouponManagement: React.FC = () => {
                                         <div className="w-24 bg-slate-100 h-1.5 rounded-full overflow-hidden">
                                             <div
                                                 className="bg-brand-500 h-full rounded-full transition-all duration-1000"
-                                                style={{ width: `${Math.min((coupon.usageCount / (coupon.usageLimit || 100)) * 100, 100)}%` }}
+                                                style={{ width: `${Math.min((coupon.usedCount / (coupon.usageLimit || 100)) * 100, 100)}%` }}
                                             ></div>
                                         </div>
-                                        <span className="text-[10px] font-black text-slate-400">{coupon.usageCount} / {coupon.usageLimit || '∞'}</span>
+                                        <span className="text-[10px] font-black text-slate-400">{coupon.usedCount} / {coupon.usageLimit || '∞'}</span>
                                     </div>
                                 </td>
                                 <td className="px-10 py-8 text-center">
                                     <div className="flex items-center justify-center gap-2 text-slate-500">
                                         <Calendar size={14} />
-                                        <span className="text-xs font-bold">{new Date(coupon.expiryDate).toLocaleDateString()}</span>
+                                        <span className="text-xs font-bold">
+                                            {coupon.expiresAt ? new Date(coupon.expiresAt).toLocaleDateString() : 'NEVER'}
+                                        </span>
                                     </div>
                                 </td>
                                 <td className="px-10 py-8 text-right">

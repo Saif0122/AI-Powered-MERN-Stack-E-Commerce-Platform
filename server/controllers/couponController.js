@@ -62,14 +62,34 @@ export const applyCoupon = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/coupons
 // @access  Private/Admin
 export const createCoupon = asyncHandler(async (req, res, next) => {
-    const coupon = await Coupon.create(req.body);
+    try {
+        const { code, type, value, expiresAt, usageLimit, minCartValue } = req.body;
 
-    res.status(201).json({
-        status: 'success',
-        data: {
-            coupon,
-        },
-    });
+        if (!code) return next(new AppError('Coupon code is required', 400));
+        if (!type) return next(new AppError('Coupon type is required', 400));
+        if (value === undefined || value <= 0) return next(new AppError('A positive discount value is required', 400));
+
+        const coupon = await Coupon.create({
+            code: code.toUpperCase(),
+            type,
+            value,
+            expiresAt,
+            usageLimit: usageLimit || 100,
+            minCartValue: minCartValue || 0
+        });
+
+        res.status(201).json({
+            status: 'success',
+            data: {
+                coupon,
+            },
+        });
+    } catch (error) {
+        if (error.code === 11000) {
+            return next(new AppError('Coupon code already exists', 400));
+        }
+        next(error);
+    }
 });
 
 // @desc    Admin: Get all coupons
