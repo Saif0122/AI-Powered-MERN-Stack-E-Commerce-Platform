@@ -177,7 +177,7 @@ const ProductDetailsPage: React.FC = () => {
                         <div className="aspect-square bg-slate-50 rounded-[2rem] md:rounded-[3rem] overflow-hidden border border-slate-100 flex items-center justify-center text-6xl md:text-8xl relative group">
                             {Array.isArray(product?.images) && product.images.length > 0 ? (
                                 <img
-                                    src={product.images[activeImage] || product.images[0]}
+                                    src={product.images[activeImage] || product.images[0] || 'https://via.placeholder.com/600x600?text=No+Image'}
                                     alt={product?.title || "Product image"}
                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                 />

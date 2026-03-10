@@ -95,8 +95,8 @@ const CartPage: React.FC = () => {
                                 <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 md:gap-8 relative z-10">
                                     <div className="w-full sm:w-32 md:w-40 aspect-square bg-slate-50 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-slate-100 flex-shrink-0">
                                         <img
-                                            src={item.product.images[0]}
-                                            alt={item.product.title}
+                                            src={item.product?.images?.[0] || 'https://via.placeholder.com/300?text=No+Image'}
+                                            alt={item.product?.title || 'Product'}
                                             className="w-full h-full object-cover transition-transform group-hover:scale-110"
                                         />
                                     </div>
@@ -105,15 +105,15 @@ const CartPage: React.FC = () => {
                                         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
                                             <div>
                                                 <h3 className="text-xl md:text-2xl font-black text-slate-950 tracking-tight group-hover:text-brand-600 transition-colors uppercase leading-none mb-2">
-                                                    {item.product.title}
+                                                    {item.product?.title || 'Classified Asset'}
                                                 </h3>
                                                 <div className="flex items-center justify-center sm:justify-start gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                                                    <Tag size={12} /> {typeof item.product.category !== 'string' ? item.product.category?.name : 'Classified'}
+                                                    <Tag size={12} /> {item.product?.category && typeof item.product.category !== 'string' ? item.product.category.name : 'Classified'}
                                                 </div>
                                             </div>
                                             <div className="text-center sm:text-right">
                                                 <p className="text-2xl md:text-3xl font-black text-slate-950 leading-none mb-1">
-                                                    ${item.product.salePrice || item.product.price}
+                                                    ${item.product ? (item.product.salePrice || item.product.price) : '0.00'}
                                                 </p>
                                                 <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Unit Credit</p>
                                             </div>
@@ -122,14 +122,14 @@ const CartPage: React.FC = () => {
                                         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-6 border-t border-slate-50">
                                             <div className="flex items-center bg-slate-50 rounded-[1rem] p-1.5 border border-slate-100">
                                                 <button
-                                                    onClick={() => updateQuantity(item.product._id, item.quantity - 1)}
+                                                    onClick={() => item.product?._id && updateQuantity(item.product._id, item.quantity - 1)}
                                                     className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white rounded-[0.8rem] text-slate-400 hover:text-brand-600 hover:shadow-lg transition-all"
                                                 >
                                                     <Minus size={16} />
                                                 </button>
                                                 <span className="w-10 md:w-14 text-center font-black text-slate-900 text-base md:text-lg">{item.quantity}</span>
                                                 <button
-                                                    onClick={() => updateQuantity(item.product._id, item.quantity + 1)}
+                                                    onClick={() => item.product?._id && updateQuantity(item.product._id, item.quantity + 1)}
                                                     className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white rounded-[0.8rem] text-slate-400 hover:text-brand-600 hover:shadow-lg transition-all"
                                                 >
                                                     <Plus size={16} />
@@ -137,7 +137,7 @@ const CartPage: React.FC = () => {
                                             </div>
 
                                             <button
-                                                onClick={() => handleRemove(item.product._id)}
+                                                onClick={() => item.product?._id && handleRemove(item.product._id)}
                                                 className="text-slate-300 hover:text-red-500 transition-colors font-black uppercase text-[10px] tracking-widest flex items-center gap-2 group/del"
                                             >
                                                 <Trash2 size={16} className="group-hover/del:scale-110 transition-transform" />

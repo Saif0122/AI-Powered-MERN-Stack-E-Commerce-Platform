@@ -127,8 +127,8 @@ const WishlistPage: React.FC = () => {
                             <div className="aspect-[4/5] bg-slate-50 rounded-[3rem] relative overflow-hidden flex items-center justify-center text-8xl mb-6">
                                 {item.product.images?.length > 0 ? (
                                     <img
-                                        src={item.product.images[0]}
-                                        alt={item.product.title}
+                                        src={item.product?.images?.[0] || 'https://via.placeholder.com/600x600?text=No+Image'}
+                                        alt={item.product?.title || 'Product'}
                                         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                                     />
                                 ) : (

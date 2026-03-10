@@ -9,7 +9,7 @@ import AppError from '../utils/AppError.js';
 export const getCart = asyncHandler(async (req, res, next) => {
     let cart = await Cart.findOne({ user: req.user._id }).populate({
         path: 'items.product',
-        select: 'title price description ratingsAverage'
+        select: 'title price description images category salePrice ratingsAverage'
     });
 
     if (!cart) {
@@ -68,7 +68,7 @@ export const addToCart = asyncHandler(async (req, res, next) => {
 
     await cart.populate({
         path: 'items.product',
-        select: 'title price description ratingsAverage'
+        select: 'title price description images category salePrice ratingsAverage'
     });
 
     res.status(200).json({
@@ -113,7 +113,7 @@ export const updateQuantity = asyncHandler(async (req, res, next) => {
 
     await cart.populate({
         path: 'items.product',
-        select: 'title price description ratingsAverage'
+        select: 'title price description images category salePrice ratingsAverage'
     });
 
     res.status(200).json({
@@ -139,7 +139,7 @@ export const removeFromCart = asyncHandler(async (req, res, next) => {
 
     await cart.populate({
         path: 'items.product',
-        select: 'title price description ratingsAverage'
+        select: 'title price description images category salePrice ratingsAverage'
     });
 
     res.status(200).json({

@@ -169,7 +169,7 @@ const CheckoutPage: React.FC = () => {
                                         <div key={item.product?._id || Math.random()} className="flex gap-4">
                                             <div className="w-16 h-16 bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 flex-shrink-0 relative">
                                                 <img
-                                                    src={Array.isArray(item.product?.images) && item.product.images.length > 0 ? item.product.images[0] : 'https://placehold.co/100x100/f8fafc/94a3b8?text=Image'}
+                                                    src={Array.isArray(item.product?.images) && item.product.images.length > 0 ? item.product.images[0] : 'https://via.placeholder.com/100x100?text=No+Image'}
                                                     alt={item.product?.title || "Product"}
                                                     className="w-full h-full object-cover"
                                                 />
