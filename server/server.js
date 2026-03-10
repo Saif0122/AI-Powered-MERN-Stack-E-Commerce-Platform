@@ -51,10 +51,7 @@ const app = express();
 // ─── MIDDLEWARES ───────────────────────────────────────────────────────────
 app.use(helmet()); // Security headers
 app.use(cors({
-    origin: [
-        'http://localhost:5173',
-        'https://ai-e-commerce-eight.vercel.app'
-    ],
+    origin: env.ALLOWED_ORIGINS,
     credentials: true
 }));   // Enable CORS with Credentials for Dev and Production
 app.use(express.json({
