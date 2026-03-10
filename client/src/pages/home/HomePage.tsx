@@ -84,26 +84,26 @@ const HomePage: React.FC = () => {
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent z-1"></div>
 
-                <div className="max-w-7xl mx-auto px-8 relative z-10 w-full">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative z-10 w-full py-12 md:py-0">
                     <div className="max-w-3xl">
-                        <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 backdrop-blur-md text-brand-400 text-[10px] font-black tracking-[0.2em] uppercase px-4 py-2 rounded-full mb-8">
+                        <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 backdrop-blur-md text-brand-400 text-[10px] font-black tracking-[0.2em] uppercase px-4 py-2 rounded-full mb-6 md:mb-8">
                             <Sparkles size={14} className="animate-pulse" />
                             Next-Gen Shopping Hub
                         </div>
-                        <h1 className="text-7xl md:text-8xl font-black text-white mb-8 leading-[0.9] tracking-tighter">
+                        <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-white mb-6 md:mb-8 leading-[0.95] md:leading-[0.9] tracking-tighter">
                             Future of <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-600">Pure Commerce</span>
                         </h1>
-                        <p className="text-xl text-slate-400 mb-12 leading-relaxed max-w-xl font-medium">
+                        <p className="text-base md:text-xl text-slate-400 mb-10 md:mb-12 leading-relaxed max-w-xl font-medium">
                             Experience the pinnacle of online shopping powered by intelligent AI discovery and a curated premium catalog.
                         </p>
-                        <div className="flex flex-wrap gap-5">
-                            <Link to="/shop" className="bg-brand-600 hover:bg-brand-700 text-white px-10 py-5 rounded-[2rem] font-black text-lg transition-all transform hover:scale-105 shadow-2xl shadow-brand-600/30 flex items-center gap-3 group">
+                        <div className="flex flex-col sm:flex-row gap-4 md:gap-5">
+                            <Link to="/shop" className="bg-brand-600 hover:bg-brand-700 text-white px-6 sm:px-8 md:px-10 py-3.5 sm:py-4 md:py-5 rounded-2xl md:rounded-[2rem] font-black text-base md:text-lg transition-all transform hover:scale-105 shadow-2xl shadow-brand-600/30 flex items-center justify-center gap-3 group">
                                 Explore Store
-                                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform md:w-5 md:h-5" />
                             </Link>
-                            <Link to="/recommendations" className="bg-white/5 hover:bg-white/10 text-white backdrop-blur-xl px-10 py-5 rounded-[2rem] font-black text-lg transition-all border border-white/10 flex items-center gap-3">
-                                <Zap size={20} className="text-brand-400" />
+                            <Link to="/recommendations" className="bg-white/5 hover:bg-white/10 text-white backdrop-blur-xl px-6 sm:px-8 md:px-10 py-3.5 sm:py-4 md:py-5 rounded-2xl md:rounded-[2rem] font-black text-base md:text-lg transition-all border border-white/10 flex items-center justify-center gap-3">
+                                <Zap size={18} className="text-brand-400 md:w-5 md:h-5" />
                                 AI Assistant
                             </Link>
                         </div>
@@ -116,20 +116,20 @@ const HomePage: React.FC = () => {
                 </div>
             </section>
 
-            <div className="max-w-7xl mx-auto px-8 py-24 space-y-32">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-24 space-y-16 md:space-y-32">
 
                 {/* 2. Featured Grid */}
                 <section>
-                    <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                    <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-6">
                         <div className="max-w-2xl">
-                            <div className="flex items-center gap-2 text-brand-600 font-black uppercase tracking-widest text-xs mb-3">
-                                <Award size={16} /> Curated Picks
+                            <div className="flex items-center gap-2 text-brand-600 font-black uppercase tracking-widest text-[10px] md:text-xs mb-3">
+                                <Award size={14} className="md:w-4 md:h-4" /> Curated Picks
                             </div>
-                            <h2 className="text-5xl font-black tracking-tighter text-slate-950">Masterpiece Collection</h2>
-                            <p className="text-slate-500 mt-4 text-lg font-medium">Handpicked excellence from our global network of certified vendors.</p>
+                            <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-slate-950">Masterpiece Collection</h2>
+                            <p className="text-slate-500 mt-2 md:mt-4 text-sm md:text-lg font-medium italic">Handpicked excellence from our global network of certified vendors.</p>
                         </div>
-                        <Link to="/shop" className="group flex items-center gap-2 text-slate-900 font-black hover:text-brand-600 transition-colors text-lg">
-                            See All Products <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                        <Link to="/shop" className="group flex items-center gap-2 text-slate-900 font-black hover:text-brand-600 transition-colors text-base md:text-lg">
+                            See All Products <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform md:w-5 md:h-5" />
                         </Link>
                     </div>
 
@@ -144,11 +144,11 @@ const HomePage: React.FC = () => {
 
                 {/* 3. Category Carousel/Grid */}
                 <section>
-                    <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2 className="text-4xl font-black tracking-tighter text-slate-950 mb-4">Vertical Discovery</h2>
-                        <p className="text-slate-500 text-lg font-medium">Navigate through our meticulously organized product tiers.</p>
+                    <div className="text-center max-w-3xl mx-auto mb-10 md:mb-16">
+                        <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-slate-950 mb-3 md:mb-4">Vertical Discovery</h2>
+                        <p className="text-slate-500 text-sm md:text-lg font-medium italic">Navigate through our meticulously organized product tiers.</p>
                     </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
                         {loading ? (
                             Array(6).fill(0).map((_, i) => <CategorySkeleton key={i} />)
                         ) : (
@@ -156,14 +156,14 @@ const HomePage: React.FC = () => {
                                 <Link
                                     key={cat._id}
                                     to={`/shop/category/${cat._id}`}
-                                    className="group bg-white border border-slate-100 p-8 rounded-[2.5rem] text-center hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+                                    className="group bg-white border border-slate-100 p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] text-center hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
                                 >
-                                    <div className="w-20 h-20 bg-slate-50 rounded-[1.5rem] flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-50 transition-colors relative">
-                                        <span className="text-4xl filter group-hover:scale-110 transition-transform">
+                                    <div className="w-12 h-12 md:w-20 md:h-20 bg-slate-50 rounded-[1rem] md:rounded-[1.5rem] flex items-center justify-center mx-auto mb-3 md:mb-6 group-hover:bg-brand-50 transition-colors relative">
+                                        <span className="text-2xl md:text-4xl filter group-hover:scale-110 transition-transform">
                                             {catIcons[cat.name] || '📦'}
                                         </span>
                                     </div>
-                                    <h3 className="font-black text-slate-900 group-hover:text-brand-600 transition-colors tracking-tight">{cat.name}</h3>
+                                    <h3 className="font-black text-slate-900 group-hover:text-brand-600 transition-colors tracking-tight text-xs md:text-base uppercase md:normal-case">{cat.name}</h3>
                                 </Link>
                             ))
                         )}
@@ -172,19 +172,19 @@ const HomePage: React.FC = () => {
 
                 {/* 4. Trending - Premium Dark Layout */}
                 <section>
-                    <div className="bg-slate-950 rounded-[4rem] p-12 md:p-20 overflow-hidden relative shadow-2xl shadow-slate-900/20">
+                    <div className="bg-slate-950 rounded-[2.5rem] md:rounded-[4rem] p-8 md:p-20 overflow-hidden relative shadow-2xl shadow-slate-900/20">
                         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-600/10 blur-[150px] rounded-full translate-x-1/3 -translate-y-1/3"></div>
                         <div className="relative z-10">
-                            <div className="flex flex-col md:flex-row items-baseline justify-between mb-16 gap-6">
+                            <div className="flex flex-col md:flex-row items-baseline justify-between mb-10 md:mb-16 gap-6">
                                 <div>
-                                    <div className="flex items-center gap-2 text-brand-400 font-black uppercase tracking-widest text-xs mb-4">
-                                        <TrendingUp size={16} /> Velocity Engine
+                                    <div className="flex items-center gap-2 text-brand-400 font-black uppercase tracking-widest text-[10px] md:text-xs mb-4">
+                                        <TrendingUp size={14} className="md:w-4 md:h-4" /> Velocity Engine
                                     </div>
-                                    <h2 className="text-5xl font-black tracking-tighter text-white">Market Heat</h2>
-                                    <p className="text-slate-400 mt-4 text-lg font-medium">Real-time trending assets identified by our global analytics.</p>
+                                    <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-white">Market Heat</h2>
+                                    <p className="text-slate-400 mt-2 md:mt-4 text-sm md:text-lg font-medium italic">Real-time trending assets identified by our global analytics.</p>
                                 </div>
-                                <Link to="/shop" className="text-white hover:text-brand-400 font-black flex items-center gap-2 transition-colors text-lg">
-                                    Flash Sale <ArrowRight size={20} />
+                                <Link to="/shop" className="text-white hover:text-brand-400 font-black flex items-center gap-2 transition-colors text-base md:text-lg">
+                                    Flash Sale <ArrowRight size={18} className="md:w-5 md:h-5" />
                                 </Link>
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -201,13 +201,13 @@ const HomePage: React.FC = () => {
                 {/* 5. AI Recommendations */}
                 {recommendedProducts.length > 0 && (
                     <section>
-                        <div className="flex items-center gap-4 mb-12">
-                            <div className="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center text-purple-600 shadow-sm">
-                                <Zap size={24} fill="currentColor" />
+                        <div className="flex items-center gap-4 mb-8 md:mb-12">
+                            <div className="w-10 h-10 md:w-12 md:h-12 bg-purple-100 rounded-xl md:rounded-2xl flex items-center justify-center text-purple-600 shadow-sm">
+                                <Zap size={20} className="md:w-6 md:h-6" fill="currentColor" />
                             </div>
                             <div>
-                                <h2 className="text-4xl font-black tracking-tighter text-slate-950">{recTitle}</h2>
-                                <p className="text-slate-500 font-medium">Computed based on your unique style DNA</p>
+                                <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-slate-950">{recTitle}</h2>
+                                <p className="text-sm md:text-base text-slate-500 font-medium italic">Computed based on your unique style DNA</p>
                             </div>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -218,9 +218,9 @@ const HomePage: React.FC = () => {
 
                 {/* 6. Unbeatable Deals */}
                 <section>
-                    <div className="mb-12">
-                        <h2 className="text-4xl font-black tracking-tighter text-slate-950 mb-2">Maximum Value</h2>
-                        <p className="text-slate-500 font-medium italic text-lg opacity-60">Elite products. Optimized pricing.</p>
+                    <div className="mb-8 md:mb-12">
+                        <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-slate-950 mb-2">Maximum Value</h2>
+                        <p className="text-sm md:text-lg text-slate-500 font-medium italic opacity-60">Elite products. Optimized pricing.</p>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
                         {loading ? (
@@ -237,30 +237,30 @@ const HomePage: React.FC = () => {
 
                 {/* 7. Testimonials */}
                 <section>
-                    <div className="text-center max-w-2xl mx-auto mb-20">
-                        <div className="inline-block px-4 py-1 bg-slate-100 text-slate-500 text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-6">Social Proof</div>
-                        <h2 className="text-4xl font-black tracking-tighter text-slate-950 mb-4">Consensus of Quality</h2>
-                        <p className="text-slate-500 font-medium text-lg">Trusted by the world's most discerning collectors and tech visionaries.</p>
+                    <div className="text-center max-w-2xl mx-auto mb-12 md:mb-20">
+                        <div className="inline-block px-4 py-1 bg-slate-100 text-slate-500 text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-6 italic">Social Proof</div>
+                        <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-slate-950 mb-4">Consensus of Quality</h2>
+                        <p className="text-slate-500 font-medium text-base md:text-lg italic">Trusted by the world's most discerning collectors and tech visionaries.</p>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
                         {[
                             { name: "Sarah Johnson", role: "Venture Architect", text: "The AI discovery engine is fundamentally different. It doesn't just show products; it identifies needs.", avatar: "https://i.pravatar.cc/150?u=sarah" },
                             { name: "Michael Chen", role: "UI/UX Specialist", text: "Impeccable execution. The logistics match the interface in terms of precision and speed.", avatar: "https://i.pravatar.cc/150?u=mike" },
                             { name: "Elena Vasquez", role: "Creative Director", text: "Finally, a platform that respects the aesthetic value of the products it lists.", avatar: "https://i.pravatar.cc/150?u=elena" }
                         ].map((testi, i) => (
-                            <div key={i} className="bg-white border border-slate-100 p-10 rounded-[3rem] shadow-sm hover:shadow-2xl transition-all duration-500 relative group">
-                                <Quote className="absolute top-10 right-10 text-slate-50 opacity-0 group-hover:opacity-100 transition-opacity" size={60} strokeWidth={3} />
-                                <div className="flex gap-1 text-amber-400 mb-8">
-                                    {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
+                            <div key={i} className="bg-white border border-slate-100 p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] shadow-sm hover:shadow-2xl transition-all duration-500 relative group">
+                                <Quote className="absolute top-8 md:top-10 right-8 md:right-10 text-slate-50 opacity-0 group-hover:opacity-100 transition-opacity w-[50px] h-[50px] md:w-[60px] md:h-[60px]" strokeWidth={3} />
+                                <div className="flex gap-1 text-amber-400 mb-6 md:mb-8">
+                                    {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 md:w-4 md:h-4" fill="currentColor" />)}
                                 </div>
-                                <p className="text-slate-700 text-xl font-medium leading-relaxed italic mb-10 relative z-10 text-balance">
+                                <p className="text-slate-700 text-lg md:text-xl font-medium leading-relaxed italic mb-8 md:mb-10 relative z-10 text-balance">
                                     "{testi.text}"
                                 </p>
                                 <div className="flex items-center gap-4">
-                                    <img src={testi.avatar} alt={testi.name} className="w-14 h-14 rounded-2xl object-cover shadow-lg" />
+                                    <img src={testi.avatar} alt={testi.name} className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl object-cover shadow-lg" />
                                     <div>
-                                        <h4 className="font-black text-slate-900 leading-none mb-1">{testi.name}</h4>
-                                        <p className="text-xs text-brand-600 font-black uppercase tracking-widest">{testi.role}</p>
+                                        <h4 className="font-black text-slate-900 leading-none mb-1 text-sm md:text-base">{testi.name}</h4>
+                                        <p className="text-[9px] md:text-xs text-brand-600 font-black uppercase tracking-widest">{testi.role}</p>
                                     </div>
                                 </div>
                             </div>
@@ -270,18 +270,18 @@ const HomePage: React.FC = () => {
 
                 {/* 8. Newsletter */}
                 <section className="pb-10">
-                    <div className="bg-brand-600 rounded-[4rem] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl shadow-brand-200">
+                    <div className="bg-brand-600 rounded-[2.5rem] md:rounded-[4rem] p-8 md:p-24 text-center relative overflow-hidden shadow-2xl shadow-brand-200">
                         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent opacity-50"></div>
                         <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-black/10 blur-[80px] rounded-full"></div>
 
                         <div className="relative z-10 max-w-3xl mx-auto">
                             {!subscribed ? (
                                 <>
-                                    <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full font-black text-[10px] uppercase tracking-widest mb-8 border border-white/20">
-                                        <Mail size={14} /> Intelligence Feed
+                                    <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full font-black text-[9px] md:text-[10px] uppercase tracking-widest mb-6 md:mb-8 border border-white/20 italic">
+                                        <Mail size={12} className="md:w-[14px] md:h-[14px]" /> Intelligence Feed
                                     </div>
-                                    <h2 className="text-5xl md:text-6xl font-black text-white mb-8 tracking-tighter">Stay Ahead of the Curve</h2>
-                                    <p className="text-brand-50 text-xl mb-12 font-medium max-w-xl mx-auto">Join our private network for early product access and AI-curated market reports.</p>
+                                    <h2 className="text-3xl md:text-6xl font-black text-white mb-4 md:mb-8 tracking-tighter">Stay Ahead of the Curve</h2>
+                                    <p className="text-brand-50 text-base md:text-xl mb-8 md:mb-12 font-medium max-w-xl mx-auto italic opacity-90">Join our private network for early product access and AI-curated market reports.</p>
                                     <form
                                         className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto"
                                         onSubmit={(e) => {
@@ -292,10 +292,10 @@ const HomePage: React.FC = () => {
                                         <input
                                             type="email"
                                             placeholder="Enter your professional email"
-                                            className="flex-grow bg-white/10 border border-white/20 backdrop-blur-xl px-8 py-5 rounded-[2rem] text-white placeholder:text-brand-200 outline-none focus:ring-4 focus:ring-white/20 transition-all font-bold text-lg"
+                                            className="flex-grow bg-white/10 border border-white/20 backdrop-blur-xl px-6 md:px-8 py-4 md:py-5 rounded-2xl md:rounded-[2rem] text-white placeholder:text-brand-200 outline-none focus:ring-4 focus:ring-white/20 transition-all font-bold text-base md:text-lg"
                                             required
                                         />
-                                        <button className="bg-white text-brand-600 hover:bg-slate-100 px-12 py-5 rounded-[2rem] font-black text-lg transition-all shadow-2xl active:scale-95 whitespace-nowrap">
+                                        <button className="bg-white text-brand-600 hover:bg-slate-100 px-8 md:px-12 py-4 md:py-5 rounded-2xl md:rounded-[2rem] font-black text-base md:text-lg transition-all shadow-2xl active:scale-95 whitespace-nowrap">
                                             Subscribe
                                         </button>
                                     </form>

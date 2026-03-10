@@ -147,11 +147,11 @@ const ProductDetailsPage: React.FC = () => {
     );
 
     if (error || !product) return (
-        <div className="max-w-7xl mx-auto px-8 py-32 text-center">
-            <div className="w-24 h-24 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-8 text-4xl">⚠️</div>
-            <h2 className="text-4xl font-black text-slate-900 mb-4 tracking-tighter">Product Not Found</h2>
-            <p className="text-slate-500 mb-12 text-lg max-w-md mx-auto">{error || 'The product you are looking for might have been moved or deleted.'}</p>
-            <Link to="/shop" className="bg-slate-900 text-white px-10 py-4 rounded-2xl font-black hover:bg-brand-600 transition-all shadow-xl">Explore Other Products</Link>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-20 md:py-32 text-center">
+            <div className="w-20 h-20 md:w-24 md:h-24 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6 md:mb-8 text-3xl md:text-4xl">⚠️</div>
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4 tracking-tighter">Product Not Found</h2>
+            <p className="text-slate-500 mb-10 md:mb-12 text-base md:text-lg max-w-md mx-auto">{error || 'The product you are looking for might have been moved or deleted.'}</p>
+            <Link to="/shop" className="bg-slate-900 text-white px-8 md:px-10 py-3.5 md:py-4 rounded-xl md:rounded-2xl font-black hover:bg-brand-600 transition-all shadow-xl text-sm md:text-base">Explore Other Products</Link>
         </div>
     );
 
@@ -161,20 +161,20 @@ const ProductDetailsPage: React.FC = () => {
         <div className="bg-white">
             <SEO title={product?.title || 'Product Details'} description={product?.description?.substring(0, 160) || ''} />
 
-            <div className="max-w-7xl mx-auto px-8 py-16">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-16">
                 {/* Breadcrumbs */}
-                <nav className="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest mb-12">
+                <nav className="flex items-center gap-2 text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest mb-8 md:mb-12">
                     <Link to="/" className="hover:text-brand-600 transition-colors">Home</Link>
-                    <ChevronRight size={12} />
+                    <ChevronRight size={10} className="md:w-3 md:h-3" />
                     <Link to="/shop" className="hover:text-brand-600 transition-colors">Shop</Link>
-                    <ChevronRight size={12} />
-                    <span className="text-slate-900">{product?.title}</span>
+                    <ChevronRight size={10} className="md:w-3 md:h-3" />
+                    <span className="text-slate-900 truncate max-w-[150px] md:max-w-none">{product?.title}</span>
                 </nav>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-start">
                     {/* Image Gallery */}
-                    <div className="space-y-8 sticky top-24">
-                        <div className="aspect-square bg-slate-50 rounded-[3rem] overflow-hidden border border-slate-100 flex items-center justify-center text-8xl relative group">
+                    <div className="space-y-6 md:space-y-8 lg:sticky lg:top-24">
+                        <div className="aspect-square bg-slate-50 rounded-[2rem] md:rounded-[3rem] overflow-hidden border border-slate-100 flex items-center justify-center text-6xl md:text-8xl relative group">
                             {Array.isArray(product?.images) && product.images.length > 0 ? (
                                 <img
                                     src={product.images[activeImage] || product.images[0]}
@@ -185,21 +185,21 @@ const ProductDetailsPage: React.FC = () => {
                                 <span className="opacity-20 filter grayscale">📦</span>
                             )}
 
-                            <button className="absolute top-6 right-6 w-12 h-12 bg-white/80 backdrop-blur-md rounded-2xl flex items-center justify-center text-slate-900 hover:bg-brand-600 hover:text-white transition-all shadow-xl">
-                                <Share2 size={20} />
+                            <button className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 md:w-12 md:h-12 bg-white/80 backdrop-blur-md rounded-xl md:rounded-2xl flex items-center justify-center text-slate-900 hover:bg-brand-600 hover:text-white transition-all shadow-xl">
+                                <Share2 size={18} className="md:w-5 md:h-5" />
                             </button>
                         </div>
 
                         {product?.images && product.images?.length > 1 && (
-                            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+                            <div className="flex gap-3 md:gap-4 overflow-x-auto pb-2 md:pb-4 scrollbar-hide">
                                 {product.images.map((img, idx) => (
                                     <button
                                         key={idx}
                                         onClick={() => setActiveImage(idx)}
-                                        className={`min-w-[100px] h-[100px] rounded-[1.5rem] overflow-hidden border-2 transition-all p-1 ${activeImage === idx ? 'border-brand-600 bg-brand-50 shadow-lg' : 'border-slate-100 opacity-60 hover:opacity-100'
+                                        className={`min-w-[80px] md:min-w-[100px] h-[80px] md:h-[100px] rounded-[1rem] md:rounded-[1.5rem] overflow-hidden border-2 transition-all p-1 flex-shrink-0 ${activeImage === idx ? 'border-brand-600 bg-brand-50 shadow-lg' : 'border-slate-100 opacity-60 hover:opacity-100'
                                             }`}
                                     >
-                                        <img src={img} alt="Thumbnail" className="w-full h-full object-cover rounded-[1.2rem]" />
+                                        <img src={img} alt="Thumbnail" className="w-full h-full object-cover rounded-[0.8rem] md:rounded-[1.2rem]" />
                                     </button>
                                 ))}
                             </div>
@@ -224,7 +224,7 @@ const ProductDetailsPage: React.FC = () => {
                                             : 'Sold Out'}                                </div>
                             </div>
 
-                            <h1 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[0.9]">{product?.title}</h1>
+                            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[0.95] md:leading-[0.9]">{product?.title}</h1>
 
                             <div className="flex items-center gap-6 py-2">
                                 <div className="flex items-center gap-2">
@@ -242,52 +242,52 @@ const ProductDetailsPage: React.FC = () => {
                             </div>
                         </div>
 
-                        <div className="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 relative overflow-hidden">
+                        <div className="p-6 md:p-8 bg-slate-50 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-brand-600/5 blur-3xl rounded-full"></div>
-                            <div className="flex items-baseline gap-4 mb-2 relative z-10">
+                            <div className="flex items-baseline gap-3 md:gap-4 mb-2 relative z-10">
                                 {hasSale ? (
                                     <>
-                                        <span className="text-6xl font-black text-brand-600 tracking-tight">${product.salePrice}</span>
-                                        <span className="text-2xl text-slate-300 line-through font-bold">${product.price}</span>
+                                        <span className="text-5xl md:text-6xl font-black text-brand-600 tracking-tight">${product.salePrice}</span>
+                                        <span className="text-xl md:text-2xl text-slate-300 line-through font-bold">${product.price}</span>
                                     </>
                                 ) : (
-                                    <span className="text-6xl font-black text-slate-900 tracking-tight">${product.price}</span>
+                                    <span className="text-5xl md:text-6xl font-black text-slate-900 tracking-tight">${product.price}</span>
                                 )}
                             </div>
-                            <p className="text-slate-500 font-bold text-sm tracking-wide flex items-center gap-2">
+                            <p className="text-slate-500 font-bold text-xs md:text-sm tracking-wide flex items-center gap-2">
                                 <Info size={14} className="text-brand-500" />
                                 Secured price protection active. No hidden fees.
                             </p>
                         </div>
 
-                        <div className="space-y-6">
-                            <div className="flex items-center gap-2 text-slate-900 font-black uppercase tracking-widest text-xs">
+                        <div className="space-y-4 md:space-y-6">
+                            <div className="flex items-center gap-2 text-slate-900 font-black uppercase tracking-widest text-[10px] md:text-xs">
                                 <Award size={16} className="text-brand-600" /> Product Intelligence
                             </div>
-                            <p className="text-slate-600 leading-relaxed text-lg font-medium text-balance">
+                            <p className="text-slate-600 leading-relaxed text-base md:text-lg font-medium text-balance">
                                 {product?.description}
                             </p>
                         </div>
 
                         {/* Seller Info */}
                         {product.vendor && typeof product.vendor !== 'string' && (
-                            <div className="flex items-center justify-between p-6 bg-white border border-slate-100 rounded-[2rem] shadow-sm">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-14 h-14 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center text-2xl font-black">
+                            <div className="flex items-center justify-between p-5 md:p-6 bg-white border border-slate-100 rounded-[1.5rem] md:rounded-[2rem] shadow-sm">
+                                <div className="flex items-center gap-3 md:gap-4">
+                                    <div className="w-12 h-12 md:w-14 md:h-14 bg-brand-50 text-brand-600 rounded-xl md:rounded-2xl flex items-center justify-center text-xl md:text-2xl font-black">
                                         {product?.vendor && typeof product.vendor !== 'string' && product.vendor.name ? product.vendor.name.charAt(0) : 'S'}
                                     </div>
                                     <div>
                                         <div className="flex items-center gap-1.5">
-                                            <h4 className="font-black text-slate-900 leading-none">{product?.vendor && typeof product.vendor !== 'string' ? product.vendor.name || 'Premium Seller' : 'Premium Seller'}</h4>
+                                            <h4 className="font-black text-slate-900 leading-none text-sm md:text-base">{product?.vendor && typeof product.vendor !== 'string' ? product.vendor.name || 'Premium Seller' : 'Premium Seller'}</h4>
                                             <UserCheck size={14} className="text-blue-500" />
                                         </div>
-                                        <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">Verified Logistics Partner</p>
+                                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Verified Logistics Partner</p>
                                     </div>
                                 </div>
                                 <div className="text-right">
-                                    <div className="text-xs font-black text-brand-600 uppercase tracking-widest">Store Rating</div>
-                                    <div className="flex items-center gap-1 text-slate-900 font-black mt-1">
-                                        <Star size={14} fill="currentColor" className="text-amber-400" />
+                                    <div className="text-[10px] font-black text-brand-600 uppercase tracking-widest">Store Rating</div>
+                                    <div className="flex items-center gap-1 text-slate-900 font-black mt-1 text-xs md:text-sm">
+                                        <Star size={12} fill="currentColor" className="text-amber-400" />
                                         4.8/5.0
                                     </div>
                                 </div>
@@ -298,7 +298,7 @@ const ProductDetailsPage: React.FC = () => {
                             <button
                                 onClick={handleAddToCart}
                                 disabled={addingToCart || (product?.stock ?? 0) === 0}
-                                className="flex-grow bg-slate-900 text-white rounded-[1.5rem] py-5 text-xl font-black transition-all hover:bg-brand-600 hover:scale-[1.02] shadow-2xl shadow-slate-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed group"
+                                className="flex-grow bg-slate-900 text-white rounded-[1.2rem] md:rounded-[1.5rem] py-4 md:py-5 text-lg md:text-xl font-black transition-all hover:bg-brand-600 hover:scale-[1.02] shadow-2xl shadow-slate-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed group"
                             >
                                 {addingToCart ? (
                                     <RefreshCcw size={24} className="animate-spin" />
@@ -312,7 +312,7 @@ const ProductDetailsPage: React.FC = () => {
                             <button
                                 onClick={handleAddToWishlist}
                                 disabled={wishlisting}
-                                className={`w-20 h-20 rounded-[1.5rem] border flex items-center justify-center transition-all shadow-xl ${isWishlisted
+                                className={`w-16 h-16 md:w-20 md:h-20 rounded-[1.2rem] md:rounded-[1.5rem] border flex items-center justify-center transition-all shadow-xl flex-shrink-0 ${isWishlisted
                                     ? 'bg-red-500 border-red-500 text-white'
                                     : 'bg-white border-slate-100 text-slate-300 hover:text-red-500 hover:border-red-100'
                                     }`}
@@ -320,7 +320,7 @@ const ProductDetailsPage: React.FC = () => {
                                 {wishlisting ? (
                                     <RefreshCcw size={24} className="animate-spin" />
                                 ) : (
-                                    <Heart size={28} fill={isWishlisted ? 'currentColor' : 'none'} strokeWidth={2.5} />
+                                    <Heart size={24} className="md:w-7 md:h-7" fill={isWishlisted ? 'currentColor' : 'none'} strokeWidth={2.5} />
                                 )}
                             </button>
                         </div>
@@ -359,33 +359,33 @@ const ProductDetailsPage: React.FC = () => {
                 </div>
 
                 {/* Related Products Section */}
-                <div className="mt-40">
-                    <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div className="mt-24 md:mt-40">
+                    <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6">
                         <div className="max-w-xl">
-                            <div className="flex items-center gap-2 text-brand-600 font-black uppercase tracking-widest text-xs mb-4">
+                            <div className="flex items-center gap-2 text-brand-600 font-black uppercase tracking-widest text-[10px] md:text-xs mb-4">
                                 <Zap size={16} fill="currentColor" /> Discovery Engine
                             </div>
-                            <h2 className="text-5xl font-black tracking-tighter text-slate-950">Intelligent Pairings</h2>
-                            <p className="text-slate-500 mt-4 text-lg font-medium italic">Analyzed and computed by our high-level semantic matchmaker.</p>
+                            <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-950">Intelligent Pairings</h2>
+                            <p className="text-slate-500 mt-4 text-base md:text-lg font-medium italic">Analyzed and computed by our high-level semantic matchmaker.</p>
                         </div>
-                        <Link to="/shop" className="text-slate-900 font-black flex items-center gap-2 hover:text-brand-600 transition-colors text-lg">
+                        <Link to="/shop" className="text-slate-900 font-black flex items-center gap-2 hover:text-brand-600 transition-colors text-base md:text-lg">
                             Browse Collection <ChevronRight size={20} />
                         </Link>
                     </div>
 
                     {fetchingRelated ? (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-                            {[...Array(4)].map((_, i) => <div key={i} className="aspect-square bg-slate-50 rounded-[2.5rem] animate-pulse"></div>)}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
+                            {[...Array(4)].map((_, i) => <div key={i} className="aspect-square bg-slate-50 rounded-[2rem] md:rounded-[2.5rem] animate-pulse"></div>)}
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
                             {relatedProducts.length > 0 ? (
                                 relatedProducts.map(p => (
                                     <ProductCard key={p._id} product={p} />
                                 ))
                             ) : (
-                                <div className="col-span-full py-24 bg-slate-50 rounded-[3rem] border border-slate-100 flex items-center justify-center">
-                                    <p className="text-slate-400 font-black italic">No immediate semantic pairings detected in current catalog.</p>
+                                <div className="col-span-full py-16 md:py-24 bg-slate-50 rounded-[2rem] md:rounded-[3rem] border border-slate-100 flex items-center justify-center">
+                                    <p className="text-slate-400 font-black italic text-center px-4">No immediate semantic pairings detected in current catalog.</p>
                                 </div>
                             )}
                         </div>
@@ -393,18 +393,18 @@ const ProductDetailsPage: React.FC = () => {
                 </div>
 
                 {/* Reviews Section */}
-                <div className="mt-40 border-t border-slate-100 pt-40">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
-                        <div className="lg:col-span-4 sticky top-24 h-fit">
-                            <h2 className="text-5xl font-black tracking-tighter text-slate-950 mb-8 leading-none">Market <br />Validation</h2>
+                <div className="mt-24 md:mt-40 border-t border-slate-100 pt-24 md:pt-40">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-20">
+                        <div className="lg:col-span-4 lg:sticky lg:top-24 h-fit">
+                            <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-950 mb-6 md:mb-8 leading-none">Market <br />Validation</h2>
 
-                            <div className="p-8 bg-slate-950 rounded-[2.5rem] text-white space-y-8 shadow-2xl shadow-slate-900/20">
+                            <div className="p-6 md:p-8 bg-slate-950 rounded-[2rem] md:rounded-[2.5rem] text-white space-y-6 md:space-y-8 shadow-2xl shadow-slate-900/20">
                                 <div className="space-y-2">
-                                    <div className="text-6xl font-black text-brand-400 leading-none">{product?.ratingsAverage ?? 5.0}</div>
+                                    <div className="text-5xl md:text-6xl font-black text-brand-400 leading-none">{product?.ratingsAverage ?? 5.0}</div>
                                     <div className="flex items-center gap-1 text-amber-400">
                                         {[...Array(5)].map((_, i) => <Star key={i} size={20} fill="currentColor" />)}
                                     </div>
-                                    <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Consensus Score</p>
+                                    <p className="text-slate-400 font-bold uppercase tracking-widest text-[9px] md:text-[10px]">Consensus Score</p>
                                 </div>
 
                                 <div className="space-y-4">
@@ -428,38 +428,38 @@ const ProductDetailsPage: React.FC = () => {
                             </div>
                         </div>
 
-                        <div className="lg:col-span-8 space-y-12">
-                            <div className="flex items-center justify-between items-baseline mb-4">
-                                <h3 className="text-2xl font-black text-slate-900 tracking-tight">Certified Statements</h3>
-                                <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">{product.ratingsQuantity || 0} Entries Identified</p>
+                        <div className="lg:col-span-8 space-y-8 md:space-y-12">
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
+                                <h3 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight">Certified Statements</h3>
+                                <p className="text-[10px] md:text-sm font-bold text-slate-400 uppercase tracking-widest">{product.ratingsQuantity || 0} Entries Identified</p>
                             </div>
 
-                            <div className="space-y-10">
+                            <div className="space-y-6 md:space-y-10">
                                 {/* Sample Reviews with Premium Styling */}
                                 {[
                                     { name: "Julian Thorne", date: "2 Hours Ago", initial: "JT", text: "Impeccable build quality. The delivery timeline was accurately projected by the system.", score: 5 },
                                     { name: "Aria Vance", date: "Yesterday", initial: "AV", text: "Product matches the digital preview perfectly. The packaging was highly secured.", score: 5 },
                                     { name: "Cassian Blake", date: "3 Days Ago", initial: "CB", text: "Slight delay in logistics, but the transparency from the seller was excellent. Top tier quality.", score: 4 }
                                 ].map((rev, i) => (
-                                    <div key={i} className="p-8 bg-white border border-slate-100 rounded-[2.5rem] shadow-sm hover:shadow-xl transition-all duration-500 group">
-                                        <div className="flex justify-between items-start mb-6">
+                                    <div key={i} className="p-6 md:p-8 bg-white border border-slate-100 rounded-[2rem] md:rounded-[2.5rem] shadow-sm hover:shadow-xl transition-all duration-500 group">
+                                        <div className="flex flex-col sm:flex-row justify-between items-start mb-6 gap-4">
                                             <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 bg-slate-50 text-slate-900 rounded-2xl flex items-center justify-center font-black group-hover:bg-brand-600 group-hover:text-white transition-all shadow-sm">
+                                                <div className="w-10 h-10 md:w-12 md:h-12 bg-slate-50 text-slate-900 rounded-xl md:rounded-2xl flex items-center justify-center font-black group-hover:bg-brand-600 group-hover:text-white transition-all shadow-sm">
                                                     {rev.initial}
                                                 </div>
                                                 <div>
-                                                    <h4 className="font-black text-slate-900 leading-none mb-1">{rev.name}</h4>
-                                                    <p className="text-[10px] text-brand-600 font-bold uppercase tracking-widest italic">Verified Procurement</p>
+                                                    <h4 className="font-black text-slate-900 leading-none mb-1 text-sm md:text-base">{rev.name}</h4>
+                                                    <p className="text-[9px] md:text-[10px] text-brand-600 font-bold uppercase tracking-widest italic">Verified Procurement</p>
                                                 </div>
                                             </div>
-                                            <div className="text-right">
-                                                <div className="flex items-center justify-end gap-1 text-amber-400 mb-1">
+                                            <div className="text-left sm:text-right">
+                                                <div className="flex items-center sm:justify-end gap-1 text-amber-400 mb-1">
                                                     {[...Array(5)].map((_, i) => <Star key={i} size={14} fill={i < rev.score ? 'currentColor' : 'none'} className={i < rev.score ? '' : 'text-slate-100'} />)}
                                                 </div>
-                                                <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">{rev.date}</p>
+                                                <p className="text-[9px] md:text-[10px] text-slate-400 font-black uppercase tracking-widest">{rev.date}</p>
                                             </div>
                                         </div>
-                                        <p className="text-slate-600 text-lg font-medium leading-relaxed italic">"{rev.text}"</p>
+                                        <p className="text-slate-600 text-base md:text-lg font-medium leading-relaxed italic">"{rev.text}"</p>
                                     </div>
                                 ))}
 

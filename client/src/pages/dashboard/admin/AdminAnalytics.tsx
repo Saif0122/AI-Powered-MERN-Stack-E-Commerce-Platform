@@ -82,18 +82,18 @@ const AdminAnalytics = () => {
     }
 
     return (
-        <div className="p-8 bg-gray-50 min-h-screen">
+        <div className="p-4 md:p-8 bg-gray-50 min-h-screen">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Admin Analytics</h1>
-                    <p className="text-gray-500 mt-1">Real-time performance metrics for MercatoX</p>
+                    <h1 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">Admin Analytics</h1>
+                    <p className="text-sm md:text-base text-gray-500 mt-1">Real-time performance metrics for MercatoX</p>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 md:gap-3">
                     <select
                         value={range}
                         onChange={(e) => setRange(e.target.value)}
-                        className="bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm font-medium text-gray-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="flex-grow md:flex-grow-0 bg-white border border-gray-200 rounded-lg px-3 md:px-4 py-2 text-xs md:text-sm font-medium text-gray-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
                         <option value="7d">Last 7 Days</option>
                         <option value="30d">Last 30 Days</option>
@@ -101,41 +101,41 @@ const AdminAnalytics = () => {
                     </select>
                     <button
                         onClick={handleExport}
-                        className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-md shadow-indigo-100"
+                        className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm font-medium transition-all shadow-md shadow-indigo-100 whitespace-nowrap"
                     >
-                        <Download size={18} />
+                        <Download size={16} className="md:w-[18px] md:h-[18px]" />
                         Export CSV
                     </button>
                 </div>
             </div>
 
             {/* KPI Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
                 <KPICard
                     title="Total Revenue"
                     value={`$${stats?.totalRevenue?.toLocaleString()}`}
-                    icon={<DollarSign className="text-indigo-600" />}
+                    icon={<DollarSign className="text-indigo-600 md:w-6 md:h-6" size={20} />}
                     trend="+12.5%"
                     up={true}
                 />
                 <KPICard
                     title="Total Orders"
                     value={stats?.totalOrders}
-                    icon={<ShoppingBag className="text-pink-600" />}
+                    icon={<ShoppingBag className="text-pink-600 md:w-6 md:h-6" size={20} />}
                     trend="+5.2%"
                     up={true}
                 />
                 <KPICard
                     title="Conversion Rate"
                     value={`${stats?.conversionRate}%`}
-                    icon={<Activity className="text-violet-600" />}
+                    icon={<Activity className="text-violet-600 md:w-6 md:h-6" size={20} />}
                     trend="-1.2%"
                     up={false}
                 />
                 <KPICard
                     title="Today's Sales"
                     value={`$${stats?.todayRevenue?.toLocaleString()}`}
-                    icon={<TrendingUp className="text-blue-600" />}
+                    icon={<TrendingUp className="text-blue-600 md:w-6 md:h-6" size={20} />}
                     trend="+22.1%"
                     up={true}
                 />
@@ -143,11 +143,11 @@ const AdminAnalytics = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Main Sales Chart */}
-                <div className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <div className="flex items-center justify-between mb-6">
-                        <h3 className="text-lg font-semibold text-gray-800">Revenue Overview</h3>
+                <div className="lg:col-span-2 bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <div className="flex items-center justify-between mb-4 md:mb-6">
+                        <h3 className="text-base md:text-lg font-semibold text-gray-800">Revenue Overview</h3>
                     </div>
-                    <div className="h-80 w-full">
+                    <div className="h-64 md:h-80 w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <AreaChart data={salesData}>
                                 <defs>
@@ -187,17 +187,17 @@ const AdminAnalytics = () => {
                 </div>
 
                 {/* Category Breakdown */}
-                <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-6">Revenue by Category</h3>
-                    <div className="h-64 w-full">
+                <div className="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 className="text-base md:text-lg font-semibold text-gray-800 mb-4 md:mb-6">Revenue by Category</h3>
+                    <div className="h-56 md:h-64 w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <PieChart>
                                 <Pie
                                     data={stats?.categoryBreakdown || []}
                                     cx="50%"
                                     cy="50%"
-                                    innerRadius={60}
-                                    outerRadius={80}
+                                    innerRadius={50}
+                                    outerRadius={70}
                                     paddingAngle={5}
                                     dataKey="revenue"
                                     nameKey="category"
@@ -207,13 +207,13 @@ const AdminAnalytics = () => {
                                     ))}
                                 </Pie>
                                 <Tooltip />
-                                <Legend verticalAlign="bottom" align="center" iconType="circle" />
+                                <Legend verticalAlign="bottom" align="center" iconType="circle" wrapperStyle={{ fontSize: '10px' }} />
                             </PieChart>
                         </ResponsiveContainer>
                     </div>
-                    <div className="mt-6 space-y-4">
+                    <div className="mt-4 md:mt-6 space-y-3 md:space-y-4">
                         {stats?.categoryBreakdown?.slice(0, 3).map((cat: CategoryBreakdown, idx: number) => (
-                            <div key={cat.category} className="flex items-center justify-between text-sm">
+                            <div key={cat.category} className="flex items-center justify-between text-xs md:text-sm">
                                 <div className="flex items-center gap-2 text-gray-600 font-medium">
                                     <div className="w-2 h-2 rounded-full" style={{ backgroundColor: COLORS[idx % COLORS.length] }}></div>
                                     {cat.category}
@@ -225,34 +225,34 @@ const AdminAnalytics = () => {
                 </div>
 
                 {/* Top Products */}
-                <div className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <div className="flex items-center justify-between mb-6">
-                        <h3 className="text-lg font-semibold text-gray-800">Most Viewed Products</h3>
-                        <button className="text-indigo-600 text-sm font-medium flex items-center gap-1 hover:text-indigo-700">
-                            View all <ChevronRight size={16} />
+                <div className="lg:col-span-2 bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <div className="flex items-center justify-between mb-4 md:mb-6">
+                        <h3 className="text-base md:text-lg font-semibold text-gray-800">Most Viewed Products</h3>
+                        <button className="text-indigo-600 text-xs md:text-sm font-medium flex items-center gap-1 hover:text-indigo-700">
+                            View all <ChevronRight size={14} className="md:w-4 md:h-4" />
                         </button>
                     </div>
-                    <div className="overflow-x-auto">
-                        <table className="w-full">
+                    <div className="overflow-x-auto min-w-full">
+                        <table className="w-full min-w-[500px]">
                             <thead>
-                                <tr className="text-left text-xs font-semibold text-gray-400 border-b border-gray-50 pb-3">
-                                    <th className="pb-4 font-semibold uppercase tracking-wider">Product Name</th>
-                                    <th className="pb-4 font-semibold uppercase tracking-wider text-right">Price</th>
-                                    <th className="pb-4 font-semibold uppercase tracking-wider text-right">Views</th>
-                                    <th className="pb-4 font-semibold uppercase tracking-wider text-right">Potential Revenue</th>
+                                <tr className="text-left text-[10px] md:text-xs font-semibold text-gray-400 border-b border-gray-50 pb-3 uppercase tracking-wider">
+                                    <th className="pb-4">Product Name</th>
+                                    <th className="pb-4 text-right">Price</th>
+                                    <th className="pb-4 text-right">Views</th>
+                                    <th className="pb-4 text-right">Revenue Est.</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-50">
                                 {topProducts.map((product: TopProduct) => (
                                     <tr key={product._id} className="hover:bg-gray-50 transition-colors">
-                                        <td className="py-4 text-sm font-medium text-gray-700">{product.title}</td>
-                                        <td className="py-4 text-sm text-gray-600 text-right">${product.price.toLocaleString()}</td>
-                                        <td className="py-4 text-sm text-gray-600 text-right">
-                                            <span className="bg-indigo-50 text-indigo-600 px-2 py-1 rounded text-xs font-bold">
+                                        <td className="py-3 md:py-4 text-xs md:text-sm font-medium text-gray-700 max-w-[150px] truncate">{product.title}</td>
+                                        <td className="py-3 md:py-4 text-xs md:text-sm text-gray-600 text-right">${product.price.toLocaleString()}</td>
+                                        <td className="py-3 md:py-4 text-xs md:text-sm text-gray-600 text-right">
+                                            <span className="bg-indigo-50 text-indigo-600 px-1.5 md:px-2 py-0.5 md:py-1 rounded text-[10px] md:text-xs font-bold">
                                                 {product.viewCount}
                                             </span>
                                         </td>
-                                        <td className="py-4 text-sm font-bold text-gray-800 text-right">
+                                        <td className="py-3 md:py-4 text-xs md:text-sm font-bold text-gray-800 text-right">
                                             ${(product.price * product.viewCount * 0.05).toLocaleString()}
                                         </td>
                                     </tr>
@@ -299,18 +299,18 @@ interface KPICardProps {
 }
 
 const KPICard: FC<KPICardProps> = ({ title, value, icon, trend, up }) => (
-    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-        <div className="flex items-center justify-between mb-4">
-            <div className="bg-gray-50 p-3 rounded-xl">
+    <div className="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+        <div className="flex items-center justify-between mb-3 md:mb-4">
+            <div className="bg-gray-50 p-2.5 md:p-3 rounded-xl">
                 {icon}
             </div>
-            <div className={`flex items-center text-xs font-bold px-2 py-1 rounded-full ${up ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
-                {up ? <ArrowUpRight size={14} className="mr-1" /> : <ArrowDownRight size={14} className="mr-1" />}
+            <div className={`flex items-center text-[10px] md:text-xs font-bold px-1.5 md:px-2 py-0.5 md:py-1 rounded-full ${up ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
+                {up ? <ArrowUpRight size={12} className="mr-1 md:w-[14px] md:h-[14px]" /> : <ArrowDownRight size={12} className="mr-1 md:w-[14px] md:h-[14px]" />}
                 {trend}
             </div>
         </div>
-        <div className="text-sm font-medium text-gray-500">{title}</div>
-        <div className="text-2xl font-bold text-gray-900 mt-1">{value}</div>
+        <div className="text-[11px] md:text-sm font-medium text-gray-500">{title}</div>
+        <div className="text-xl md:text-2xl font-bold text-gray-900 mt-1">{value}</div>
     </div>
 );
 

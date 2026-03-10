@@ -65,14 +65,14 @@ const AddProduct: React.FC = () => {
         <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-700">
             <button
                 onClick={() => navigate(-1)}
-                className="flex items-center gap-2 text-slate-500 hover:text-slate-900 font-bold uppercase tracking-widest text-[10px] transition-all"
+                className="flex items-center gap-2 text-slate-500 hover:text-slate-900 font-bold uppercase tracking-widest text-[9px] md:text-[10px] transition-all"
             >
-                <ArrowLeft size={14} /> Back to Hub
+                <ArrowLeft size={12} className="md:w-3.5 md:h-3.5" /> Back to Hub
             </button>
 
             <header>
-                <h1 className="text-3xl font-black text-slate-900 tracking-tight">INVENTORY_GENESIS</h1>
-                <p className="text-slate-500 font-bold uppercase tracking-widest text-xs mt-1">Deploy a new product entity to the marketplace</p>
+                <h1 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">INVENTORY_GENESIS</h1>
+                <p className="text-slate-500 font-bold uppercase tracking-widest text-[10px] md:text-xs mt-1">Deploy a new product entity to the marketplace</p>
             </header>
 
             {error && (
@@ -84,11 +84,11 @@ const AddProduct: React.FC = () => {
 
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Left Side: Basic Info */}
-                <div className="space-y-6">
-                    <div className="card p-8 bg-white border border-slate-100 shadow-xl rounded-[40px] space-y-6">
+                <div className="space-y-4 md:space-y-6">
+                    <div className="card p-6 md:p-8 bg-white border border-slate-100 shadow-xl rounded-[2rem] md:rounded-[40px] space-y-4 md:space-y-6">
                         <div className="flex items-center gap-3 mb-2">
-                            <FileText className="text-brand-600" size={18} />
-                            <h3 className="font-black text-slate-900 uppercase tracking-widest text-xs">Core_Specifications</h3>
+                            <FileText size={16} className="text-brand-600 md:w-[18px] md:h-[18px]" />
+                            <h3 className="font-black text-slate-900 uppercase tracking-widest text-[10px] md:text-xs">Core_Specifications</h3>
                         </div>
 
                         <div className="space-y-4">
@@ -136,11 +136,11 @@ const AddProduct: React.FC = () => {
                 </div>
 
                 {/* Right Side: Valuatiton & Inventory */}
-                <div className="space-y-6">
-                    <div className="card p-8 bg-white border border-slate-100 shadow-xl rounded-[40px] space-y-6">
+                <div className="space-y-4 md:space-y-6">
+                    <div className="card p-6 md:p-8 bg-white border border-slate-100 shadow-xl rounded-[2rem] md:rounded-[40px] space-y-4 md:space-y-6">
                         <div className="flex items-center gap-3 mb-2">
-                            <BarChart className="text-brand-600" size={18} />
-                            <h3 className="font-black text-slate-900 uppercase tracking-widest text-xs">Market_Metrics</h3>
+                            <BarChart size={16} className="text-brand-600 md:w-[18px] md:h-[18px]" />
+                            <h3 className="font-black text-slate-900 uppercase tracking-widest text-[10px] md:text-xs">Market_Metrics</h3>
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
@@ -197,7 +197,7 @@ const AddProduct: React.FC = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-slate-900 text-white p-6 rounded-[30px] font-black uppercase tracking-[0.2em] shadow-2xl shadow-slate-200 hover:bg-slate-800 transition-all disabled:opacity-50 flex items-center justify-center gap-3"
+                        className="w-full bg-slate-900 text-white p-5 md:p-6 rounded-[1.5rem] md:rounded-[30px] font-black uppercase tracking-[0.1em] md:tracking-[0.2em] shadow-2xl shadow-slate-200 hover:bg-slate-800 transition-all disabled:opacity-50 flex items-center justify-center gap-3 text-xs md:text-base mb-8 md:mb-0"
                     >
                         {loading ? (
                             <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>

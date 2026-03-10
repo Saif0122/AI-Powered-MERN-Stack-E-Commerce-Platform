@@ -48,8 +48,8 @@ const LoginPage: React.FC = () => {
                 </div>
             )}
             <div>
-                <h2 className="text-3xl font-black text-slate-900 mb-2">Welcome Back</h2>
-                <p className="text-slate-500">Please enter your details to sign in.</p>
+                <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-2">Welcome Back</h2>
+                <p className="text-sm md:text-base text-slate-500">Please enter your details to sign in.</p>
             </div>
 
             <form className="space-y-6" onSubmit={handleSubmit}>

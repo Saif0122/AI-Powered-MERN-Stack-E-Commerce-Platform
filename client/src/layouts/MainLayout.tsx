@@ -66,9 +66,9 @@ const MainLayout: React.FC = () => {
                 }`}>
                 <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between gap-8">
                     {/* Logo */}
-                    <Link to="/" className="text-2xl font-black tracking-tighter text-slate-900 flex items-center gap-2 flex-shrink-0">
-                        <div className="w-10 h-10 bg-brand-600 rounded-xl flex items-center justify-center text-white text-xl">M</div>
-                        <span>Mercato<span className="text-brand-600 text-lg">X</span></span>
+                    <Link to="/" className="text-xl sm:text-2xl font-black tracking-tighter text-slate-900 flex items-center gap-2 flex-shrink-0">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-brand-600 rounded-xl flex items-center justify-center text-white text-lg sm:text-xl">M</div>
+                        <span>Mercato<span className="text-brand-600 text-base sm:text-lg">X</span></span>
                     </Link>
 
                     {/* Desktop Navigation */}
@@ -93,32 +93,32 @@ const MainLayout: React.FC = () => {
                     </form>
 
                     {/* Action Buttons */}
-                    <div className="flex items-center space-x-2">
-                        <Link to="/wishlist" className="p-2.5 text-slate-600 hover:text-brand-600 hover:bg-slate-100 rounded-2xl transition-all relative">
-                            <Heart size={22} strokeWidth={2.2} />
+                    <div className="flex items-center space-x-1 sm:space-x-2">
+                        <Link to="/wishlist" className="p-2 sm:p-2.5 text-slate-600 hover:text-brand-600 hover:bg-slate-100 rounded-2xl transition-all relative">
+                            <Heart size={20} className="sm:w-[22px] sm:h-[22px]" strokeWidth={2.2} />
                         </Link>
-                        <Link to="/cart" className="p-2.5 text-slate-600 hover:text-brand-600 hover:bg-slate-100 rounded-2xl transition-all relative">
-                            <ShoppingCart size={22} strokeWidth={2.2} />
+                        <Link to="/cart" className="p-2 sm:p-2.5 text-slate-600 hover:text-brand-600 hover:bg-slate-100 rounded-2xl transition-all relative">
+                            <ShoppingCart size={20} className="sm:w-[22px] sm:h-[22px]" strokeWidth={2.2} />
                             {cartCount > 0 && (
-                                <span className="absolute top-1.5 right-1.5 bg-brand-600 text-white text-[10px] font-black h-4.5 w-4.5 rounded-full flex items-center justify-center border-2 border-white">
+                                <span className="absolute top-1 right-1 sm:top-1.5 sm:right-1.5 bg-brand-600 text-white text-[9px] sm:text-[10px] font-black h-4 w-4 sm:h-4.5 sm:w-4.5 rounded-full flex items-center justify-center border-2 border-white">
                                     {cartCount}
                                 </span>
                             )}
                         </Link>
 
-                        <div className="h-6 w-px bg-slate-200 mx-2 hidden lg:block"></div>
+                        <div className="h-6 w-px bg-slate-200 mx-1 sm:mx-2 hidden lg:block"></div>
 
                         {user ? (
                             <div className="relative">
                                 <button
                                     onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
-                                    className="flex items-center gap-2 p-1 pl-1.5 pr-3 bg-slate-50 border border-slate-100 rounded-2xl hover:bg-slate-100 transition-all group"
+                                    className="flex items-center gap-1.5 sm:gap-2 p-1 pl-1.5 pr-2 sm:pr-3 bg-slate-50 border border-slate-100 rounded-2xl hover:bg-slate-100 transition-all group"
                                 >
-                                    <div className="w-8 h-8 bg-brand-100 rounded-xl flex items-center justify-center text-brand-700 font-black text-sm uppercase">
+                                    <div className="w-7 h-7 sm:w-8 sm:h-8 bg-brand-100 rounded-xl flex items-center justify-center text-brand-700 font-black text-[12px] sm:text-sm uppercase">
                                         {user.name.charAt(0)}
                                     </div>
-                                    <span className="text-sm font-bold text-slate-700 hidden sm:block">{user.name.split(' ')[0]}</span>
-                                    <ChevronDown size={14} className={`text-slate-400 group-hover:text-brand-600 transition-transform ${isUserDropdownOpen ? 'rotate-180' : ''}`} />
+                                    <span className="text-xs sm:text-sm font-bold text-slate-700 hidden sm:block">{user.name.split(' ')[0]}</span>
+                                    <ChevronDown size={12} className={`text-slate-400 group-hover:text-brand-600 transition-transform ${isUserDropdownOpen ? 'rotate-180' : ''}`} />
                                 </button>
 
                                 {isUserDropdownOpen && (
@@ -192,15 +192,15 @@ const MainLayout: React.FC = () => {
                 <Outlet />
             </main>
 
-            <footer className="bg-slate-900 text-slate-300 pt-24 pb-12">
-                <div className="max-w-7xl mx-auto px-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
+            <footer className="bg-slate-900 text-slate-300 pt-16 md:pt-24 pb-12 overflow-hidden">
+                <div className="max-w-7xl mx-auto px-6 md:px-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-16 mb-20">
                         {/* Brand Column */}
                         <div className="col-span-1">
-                            <Link to="/" className="text-2xl font-black text-white mb-8 block tracking-tighter">
+                            <Link to="/" className="text-2xl font-black text-white mb-6 md:mb-8 block tracking-tighter">
                                 <span className="text-brand-600">M</span>ercatoX
                             </Link>
-                            <p className="text-slate-400 mb-8 leading-relaxed font-medium">
+                            <p className="text-slate-400 mb-6 md:mb-8 leading-relaxed font-medium text-sm md:text-base">
                                 The ultimate AI-powered shopping ecosystem. Premium curation meets intelligent discovery.
                             </p>
                             <div className="flex space-x-5">
@@ -236,14 +236,14 @@ const MainLayout: React.FC = () => {
                         </div>
 
                         {/* Contact Info */}
-                        <div className="bg-white/5 border border-white/10 p-8 rounded-[2rem]">
+                        <div className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-[2rem]">
                             <h4 className="text-white font-black mb-6 uppercase tracking-[0.2em] text-xs">Direct Support</h4>
                             <ul className="space-y-5">
-                                <li className="flex items-start gap-4 text-sm">
+                                <li className="flex items-start gap-4 text-xs sm:text-sm">
                                     <div className="w-8 h-8 rounded-lg bg-brand-600/20 text-brand-400 flex items-center justify-center flex-shrink-0">@</div>
-                                    <span className="leading-tight pt-1">support@mercatox.tech</span>
+                                    <span className="leading-tight pt-1 truncate">support@mercatox.tech</span>
                                 </li>
-                                <li className="flex items-start gap-4 text-sm">
+                                <li className="flex items-start gap-4 text-xs sm:text-sm">
                                     <div className="w-8 h-8 rounded-lg bg-green-600/20 text-green-400 flex items-center justify-center flex-shrink-0">P</div>
                                     <span className="leading-tight pt-1">+1 (888) AI-SHOP-NOW</span>
                                 </li>

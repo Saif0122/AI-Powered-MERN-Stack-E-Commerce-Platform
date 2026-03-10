@@ -59,30 +59,30 @@ const CheckoutPage: React.FC = () => {
     };
 
     if (loading) return (
-        <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-8 text-center animate-pulse">
-            <div className="w-20 h-20 bg-brand-100 rounded-[2.5rem] flex items-center justify-center mb-8">
-                <ShieldCheck size={40} className="text-brand-600 animate-pulse" />
+        <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center animate-pulse">
+            <div className="w-16 h-16 md:w-20 md:h-20 bg-brand-100 rounded-[1.5rem] md:rounded-[2.5rem] flex items-center justify-center mb-6 md:mb-8">
+                <ShieldCheck size={32} className="text-brand-600 animate-pulse md:w-10 md:h-10" />
             </div>
-            <h2 className="text-4xl font-black text-slate-900 tracking-tighter mb-4">Initializing Order Security</h2>
-            <p className="text-slate-500 font-medium">Authenticating payment gateway and secure tokens...</p>
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter mb-4">Initializing Order Security</h2>
+            <p className="text-slate-500 font-medium text-sm md:text-base">Authenticating payment gateway and secure tokens...</p>
         </div>
     );
 
     if (error) return (
-        <div className="min-h-screen bg-white flex flex-col items-center justify-center p-8 text-center">
-            <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mb-8 text-4xl">⚠️</div>
-            <h2 className="text-4xl font-black text-slate-900 tracking-tighter mb-4">Gateway Initialization Failed</h2>
-            <p className="text-slate-500 max-w-md mx-auto mb-10 font-medium">{error}</p>
-            <Link to="/cart" className="bg-slate-900 text-white px-12 py-4 rounded-2xl font-black hover:bg-brand-600 transition-all shadow-xl">Back to Logistics</Link>
+        <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 text-center">
+            <div className="w-16 h-16 md:w-20 md:h-20 bg-red-50 rounded-full flex items-center justify-center mb-6 md:mb-8 text-3xl md:text-4xl">⚠️</div>
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter mb-4">Gateway Initialization Failed</h2>
+            <p className="text-slate-500 max-w-md mx-auto mb-8 md:mb-10 font-medium text-sm md:text-base">{error}</p>
+            <Link to="/cart" className="bg-slate-900 text-white px-10 md:px-12 py-3.5 md:py-4 rounded-xl md:rounded-2xl font-black hover:bg-brand-600 transition-all shadow-xl text-sm md:text-base">Back to Logistics</Link>
         </div>
     );
 
     if (!cart || !Array.isArray(cart.items) || cart.items.length === 0) return (
-        <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-8 text-center">
-            <div className="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mb-8 text-5xl grayscale opacity-20">🛒</div>
-            <h2 className="text-4xl font-black text-slate-900 tracking-tighter mb-4">Procurement Stack Empty</h2>
-            <p className="text-slate-500 mb-10 font-medium">Add assets to your order hierarchy to initialize checkout protocol.</p>
-            <Link to="/shop" className="bg-brand-600 text-white px-12 py-4 rounded-2xl font-black hover:bg-brand-700 transition-all shadow-xl">Browse Catalog</Link>
+        <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center">
+            <div className="w-20 h-20 md:w-24 md:h-24 bg-slate-100 rounded-full flex items-center justify-center mb-6 md:mb-8 text-4xl md:text-5xl grayscale opacity-20">🛒</div>
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter mb-4">Procurement Stack Empty</h2>
+            <p className="text-slate-500 mb-8 md:mb-10 font-medium text-sm md:text-base">Add assets to your order hierarchy to initialize checkout protocol.</p>
+            <Link to="/shop" className="bg-brand-600 text-white px-10 md:px-12 py-3.5 md:py-4 rounded-xl md:rounded-2xl font-black hover:bg-brand-700 transition-all shadow-xl text-sm md:text-base">Browse Catalog</Link>
         </div>
     );
 
@@ -90,47 +90,49 @@ const CheckoutPage: React.FC = () => {
         <div className="min-h-screen bg-slate-50">
             <SEO title="Secure Checkout" description="Finalize your premium procurement via AI-secured gateway." />
 
-            <div className="max-w-7xl mx-auto px-8 py-16">
-                <div className="flex items-center gap-4 mb-16">
-                    <Link to="/cart" className="w-12 h-12 bg-white rounded-2xl border border-slate-100 flex items-center justify-center text-slate-400 hover:text-brand-600 hover:border-brand-600 transition-all shadow-sm group">
-                        <ChevronLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-16">
+                <div className="flex items-center gap-4 mb-10 md:mb-16">
+                    <Link to="/cart" className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-xl md:rounded-2xl border border-slate-100 flex items-center justify-center text-slate-400 hover:text-brand-600 hover:border-brand-600 transition-all shadow-sm group">
+                        <ChevronLeft size={20} className="group-hover:-translate-x-1 transition-transform md:w-6 md:h-6" />
                     </Link>
                     <div>
-                        <h1 className="text-4xl font-black text-slate-900 tracking-tighter leading-none mb-1">Final Procurement</h1>
-                        <p className="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Transaction ID: MTX-SECURED</p>
+                        <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter leading-none mb-1">Final Procurement</h1>
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Transaction ID: MTX-SECURED</p>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
                     {/* Left: Payment Info */}
                     <div className="lg:col-span-7 space-y-12">
                         {/* Security Notice */}
-                        <div className="bg-slate-950 p-8 rounded-[3rem] text-white overflow-hidden relative shadow-2xl shadow-slate-900/20">
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-brand-600/10 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
-                            <div className="relative z-10 flex items-start gap-6">
-                                <div className="w-14 h-14 bg-brand-600/20 border border-brand-500/30 rounded-2xl flex items-center justify-center text-brand-400">
-                                    <Lock size={28} />
+                        <div className="bg-slate-950 p-6 md:p-8 rounded-[2rem] md:rounded-[3rem] text-white overflow-hidden relative shadow-2xl shadow-slate-900/20">
+                            <div className="absolute top-0 right-0 w-48 md:w-64 h-48 md:h-64 bg-brand-600/10 blur-2xl md:blur-3xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+                            <div className="relative z-10 flex flex-row md:flex-row items-center md:items-start gap-4 md:gap-6">
+                                <div className="w-12 h-12 md:w-14 md:h-14 bg-brand-600/20 border border-brand-500/30 rounded-xl md:rounded-2xl flex items-center justify-center text-brand-400 flex-shrink-0">
+                                    <Lock size={24} className="md:w-7 md:h-7" />
                                 </div>
-                                <div>
-                                    <h2 className="text-2xl font-black tracking-tight mb-2">Neural Link Secured</h2>
-                                    <p className="text-slate-400 font-medium text-lg leading-relaxed">
-                                        Your transaction is protected by 256-bit SSL encryption and our AI fraud detection engine. No card data is stored on our servers.
+                                <div className="min-w-0">
+                                    <h2 className="text-xl md:text-2xl font-black tracking-tight mb-1 md:mb-2">Neural Link Secured</h2>
+                                    <p className="text-slate-400 font-medium text-sm md:text-lg leading-relaxed">
+                                        Your transaction is protected by 256-bit SSL encryption.
                                     </p>
                                 </div>
                             </div>
                         </div>
 
                         {/* Payment Method Container */}
-                        <div className="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm space-y-8">
+                        <div className="bg-white p-6 sm:p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] border border-slate-100 shadow-sm space-y-6 md:space-y-8">
                             <div className="flex items-center gap-3">
-                                <CreditCard size={20} className="text-brand-600" />
-                                <h3 className="text-xl font-black text-slate-900 tracking-tight">Payment Method</h3>
+                                <CreditCard size={18} className="text-brand-600 md:w-5 md:h-5" />
+                                <h3 className="text-lg md:text-xl font-black text-slate-900 tracking-tight">Payment Method</h3>
                             </div>
 
                             {clientSecret && (
-                                <Elements stripe={stripePromise} options={{ clientSecret }}>
-                                    <CheckoutForm clientSecret={clientSecret} couponCode={appliedCoupon?.code} />
-                                </Elements>
+                                <div className="checkout-form-container">
+                                    <Elements stripe={stripePromise} options={{ clientSecret }}>
+                                        <CheckoutForm clientSecret={clientSecret} couponCode={appliedCoupon?.code} />
+                                    </Elements>
+                                </div>
                             )}
                         </div>
 
@@ -158,10 +160,10 @@ const CheckoutPage: React.FC = () => {
                     </div>
 
                     {/* Right: Order Summary */}
-                    <aside className="lg:col-span-5 sticky top-16">
-                        <div className="bg-white rounded-[3rem] border border-slate-100 shadow-xl overflow-hidden">
-                            <div className="p-10 border-b border-slate-50">
-                                <h3 className="text-2xl font-black text-slate-900 tracking-tight mb-8">Order Hierarchy</h3>
+                    <aside className="lg:col-span-5 lg:sticky lg:top-16">
+                        <div className="bg-white rounded-[2rem] md:rounded-[3rem] border border-slate-100 shadow-xl overflow-hidden">
+                            <div className="p-6 md:p-10 border-b border-slate-50">
+                                <h3 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight mb-6 md:mb-8">Order Hierarchy</h3>
                                 <div className="space-y-6 max-h-[300px] overflow-y-auto pr-4 scrollbar-hide">
                                     {Array.isArray(cart.items) && cart.items.map((item: any) => (
                                         <div key={item.product?._id || Math.random()} className="flex gap-4">
@@ -182,7 +184,7 @@ const CheckoutPage: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="p-10 bg-slate-50/50 space-y-8">
+                            <div className="p-6 md:p-10 bg-slate-50/50 space-y-6 md:space-y-8">
                                 <div className="space-y-3">
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block pl-2">Promotion Protocol</label>
                                     <div className="flex gap-2">
@@ -192,12 +194,12 @@ const CheckoutPage: React.FC = () => {
                                             onChange={(e) => setCouponCode(e.target.value)}
                                             placeholder="ENTER CODE"
                                             disabled={!!appliedCoupon || applyingCoupon}
-                                            className="flex-grow bg-white border border-slate-100 rounded-2xl px-6 py-4 font-black uppercase tracking-widest focus:outline-none focus:ring-4 focus:ring-brand-500/10 transition-all text-sm shadow-sm"
+                                            className="flex-grow bg-white border border-slate-100 rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 font-black uppercase tracking-widest focus:outline-none focus:ring-4 focus:ring-brand-500/10 transition-all text-sm shadow-sm min-w-0"
                                         />
                                         <button
                                             onClick={handleApplyCoupon}
                                             disabled={applyingCoupon || !!appliedCoupon || !couponCode.trim()}
-                                            className={`px-8 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-lg active:scale-95 ${appliedCoupon
+                                            className={`px-4 md:px-8 rounded-xl md:rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-widest transition-all shadow-lg active:scale-95 whitespace-nowrap ${appliedCoupon
                                                 ? 'bg-green-500 text-white'
                                                 : 'bg-slate-900 text-white hover:bg-brand-600'
                                                 }`}
@@ -205,14 +207,14 @@ const CheckoutPage: React.FC = () => {
                                             {applyingCoupon ? <Loader2 className="animate-spin" size={16} /> : appliedCoupon ? 'Locked ✓' : 'Link'}
                                         </button>
                                     </div>
-                                    {couponError && <p className="text-red-500 text-[10px] font-black pl-2 tracking-tight uppercase">{couponError}</p>}
+                                    {couponError && <p className="text-red-500 text-[9px] md:text-[10px] font-black pl-2 tracking-tight uppercase">{couponError}</p>}
                                     {appliedCoupon && (
-                                        <div className="flex justify-between items-center bg-green-100 border border-green-200 p-4 rounded-2xl">
+                                        <div className="flex justify-between items-center bg-green-100 border border-green-200 p-3 md:p-4 rounded-xl md:rounded-2xl">
                                             <div>
-                                                <p className="text-green-800 font-black text-xs uppercase tracking-widest">Code Applied</p>
-                                                <p className="text-green-700/80 text-[10px] font-bold">-{appliedCoupon.value}% Optimization</p>
+                                                <p className="text-green-800 font-black text-[10px] md:text-xs uppercase tracking-widest">Code Applied</p>
+                                                <p className="text-green-700/80 text-[9px] md:text-[10px] font-bold">-{appliedCoupon.value}% Optimization</p>
                                             </div>
-                                            <button onClick={() => { setAppliedCoupon(null); setCouponCode(''); }} className="text-green-900/50 hover:text-red-500 transition-colors font-black text-[10px] uppercase">Reset</button>
+                                            <button onClick={() => { setAppliedCoupon(null); setCouponCode(''); }} className="text-green-900/50 hover:text-red-500 transition-colors font-black text-[9px] md:text-[10px] uppercase">Reset</button>
                                         </div>
                                     )}
                                 </div>
@@ -234,22 +236,22 @@ const CheckoutPage: React.FC = () => {
                                     )}
                                     <div className="flex justify-between items-end pt-4 border-t border-slate-200">
                                         <div>
-                                            <p className="text-slate-900 font-black text-lg tracking-tight">Order Total</p>
-                                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Inclusive of all duties</p>
+                                            <p className="text-slate-900 font-black text-base md:text-lg tracking-tight">Order Total</p>
+                                            <p className="text-[9px] md:text-[10px] text-slate-400 font-bold uppercase tracking-widest">Inclusive of all duties</p>
                                         </div>
-                                        <span className="text-4xl font-black text-slate-900 tracking-tighter">${(appliedCoupon ? appliedCoupon.newTotal : cart.totalPrice).toFixed(2)}</span>
+                                        <span className="text-3xl md:text-4xl font-black text-slate-900 tracking-tighter">${(appliedCoupon ? appliedCoupon.newTotal : cart.totalPrice).toFixed(2)}</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="p-10 bg-white space-y-6">
+                            <div className="p-6 md:p-10 bg-white space-y-4 md:space-y-6">
                                 <div className="flex items-center gap-4 text-slate-400">
-                                    <Zap size={16} fill="currentColor" />
-                                    <p className="text-[10px] font-black uppercase tracking-[0.2em] leading-tight">Instant confirmation via digital node</p>
+                                    <Zap size={14} className="md:w-4 md:h-4" fill="currentColor" />
+                                    <p className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] leading-tight">Instant confirmation via digital node</p>
                                 </div>
                                 <div className="flex items-center gap-4 text-slate-400 text-pretty">
-                                    <Info size={16} className="shrink-0" />
-                                    <p className="text-[10px] font-black uppercase tracking-[0.2em] leading-tight">By completing procurement, you accept our standard neural architecture protocols.</p>
+                                    <Info size={14} className="md:w-4 md:h-4 shrink-0" />
+                                    <p className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] leading-tight">By completing procurement, you accept our standard neural architecture protocols.</p>
                                 </div>
                             </div>
                         </div>

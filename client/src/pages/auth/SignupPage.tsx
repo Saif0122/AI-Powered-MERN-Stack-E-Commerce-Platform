@@ -52,12 +52,12 @@ const SignupPage: React.FC = () => {
                 </div>
             )}
             <div>
-                <h2 className="text-3xl font-black text-slate-900 mb-2">Create Account</h2>
-                <p className="text-slate-500">Join the AI-powered marketplace today.</p>
+                <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-2">Create Account</h2>
+                <p className="text-sm md:text-base text-slate-500">Join the AI-powered marketplace today.</p>
             </div>
 
             <form className="space-y-6" onSubmit={handleSubmit}>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-bold text-slate-700 mb-2">First Name</label>
                         <input
@@ -108,7 +108,7 @@ const SignupPage: React.FC = () => {
 
                 <div>
                     <label className="block text-sm font-bold text-slate-700 mb-2">Account Type</label>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <button
                             type="button"
                             onClick={() => setAccountType('buyer')}
